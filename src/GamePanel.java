@@ -13,26 +13,26 @@ public class GamePanel extends JPanel implements ActionListener {
         this.timer = new Timer(16, this); // roughly 60 FPS
 
         // Add initial particles
-        for (int i = 0; i < 10; i++) {
-            addParticle(new AirParticle(randomX(), randomY(), 10, randomSpeed(), randomSpeed()));
-            addParticle(new PowderParticle(randomX(), randomY(), 15, randomSpeed(), randomSpeed()));
-            addParticle(new LightParticle(randomX(), randomY(), 20, randomSpeed(), randomSpeed()));
+        for (int i = 0; i < 5; i++) {
+            addParticle(new AirParticle(400, 300, 10, randomSpeed() + 4, randomSpeed() + 4));
+            addParticle(new PowderParticle(400, 300, 10, randomSpeed() + 4, randomSpeed() + 4));
+            addParticle(new LightParticle(400, 300, 10, randomSpeed() + 4, randomSpeed() + 4));
         }
 
         this.timer.start();
         setBackground(Color.BLACK);
     }
 
-    private int randomX() {
-        return (int) (Math.random() * (getWidth() - 20));
+    private int getInitialCenterX() {
+        return (getWidth() - 20) / 2;
     }
 
-    private int randomY() {
-        return (int) (Math.random() * (getHeight() - 20));
+    private int getInitialCenterY() {
+        return (getHeight() - 20) / 2;
     }
 
     private int randomSpeed() {
-        return (int) (Math.random() * 4 - 2);
+        return (int) (Math.random() * 6) - 3;
     }
 
     public void addParticle(Particle particle) {

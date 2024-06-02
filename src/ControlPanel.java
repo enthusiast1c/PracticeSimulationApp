@@ -13,9 +13,9 @@ public class ControlPanel extends JPanel {
 
     public ControlPanel(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
-        this.setLayout(new GridLayout(6, 1));
+        this.setLayout(new GridLayout(4, 2));
 
-        speedSlider = new JSlider(1, 10, 5);
+        speedSlider = new JSlider(1, 20, 10);
         sizeSlider = new JSlider(1, 20, 10);
 
         addAirParticleButton = new JButton("Add 10 Air Particles");
@@ -57,11 +57,11 @@ public class ControlPanel extends JPanel {
     }
 
     private int randomX() {
-        return random.nextInt(gamePanel.getWidth() - 20);
+        return random.nextInt(gamePanel.getWidth() - 40) + 20;
     }
 
     private int randomY() {
-        return random.nextInt(gamePanel.getHeight() - 20);
+        return random.nextInt(gamePanel.getHeight() - 40) + 20;
     }
 
     private int randomSpeed() {

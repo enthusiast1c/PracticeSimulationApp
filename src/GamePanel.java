@@ -13,11 +13,26 @@ public class GamePanel extends JPanel implements ActionListener {
         this.timer = new Timer(16, this); // roughly 60 FPS
 
         // Add initial particles
-        addParticle(new AirParticle(50, 50, 10, 2, 3));
-        addParticle(new PowderParticle(100, 100, 15, -2, 1));
-        addParticle(new LightParticle(150, 150, 20, 3, -2));
+        for (int i = 0; i < 10; i++) {
+            addParticle(new AirParticle(randomX(), randomY(), 10, randomSpeed(), randomSpeed()));
+            addParticle(new PowderParticle(randomX(), randomY(), 15, randomSpeed(), randomSpeed()));
+            addParticle(new LightParticle(randomX(), randomY(), 20, randomSpeed(), randomSpeed()));
+        }
 
         this.timer.start();
+        setBackground(Color.BLACK);
+    }
+
+    private int randomX() {
+        return (int) (Math.random() * (getWidth() - 20));
+    }
+
+    private int randomY() {
+        return (int) (Math.random() * (getHeight() - 20));
+    }
+
+    private int randomSpeed() {
+        return (int) (Math.random() * 4 - 2);
     }
 
     public void addParticle(Particle particle) {
@@ -27,6 +42,11 @@ public class GamePanel extends JPanel implements ActionListener {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        // Draw boundary
+        g.setColor(Color.RED);
+        g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
+
         for (Particle particle : particles) {
             particle.draw(g);
         }

@@ -21,4 +21,13 @@ public abstract class Particle {
         g.setColor(color);
         g.fillOval(x, y, size, size);
     }
+
+    public void checkBoundaryCollision(int width, int height) {
+        if (x < 0 || x > width - size) {
+            speedX = -speedX;
+        }
+        if (y < 0 || y > height - size) {
+            speedY = -speedY;
+        }
+    }
 }

@@ -11,6 +11,12 @@ public class GamePanel extends JPanel implements ActionListener {
     public GamePanel() {
         this.particles = new ArrayList<>();
         this.timer = new Timer(16, this); // roughly 60 FPS
+
+        // Add initial particles
+        addParticle(new AirParticle(50, 50, 10, 2, 3));
+        addParticle(new PowderParticle(100, 100, 15, -2, 1));
+        addParticle(new LightParticle(150, 150, 20, 3, -2));
+
         this.timer.start();
     }
 
@@ -30,6 +36,7 @@ public class GamePanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         for (Particle particle : particles) {
             particle.move(particles);
+            particle.checkBoundaryCollision(getWidth(), getHeight());
         }
         repaint();
     }

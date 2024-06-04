@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 // Класс для панели
 public class GamePanel extends JPanel implements ActionListener {
@@ -51,11 +52,25 @@ public class GamePanel extends JPanel implements ActionListener {
     // Обработчик действий таймера
     @Override
     public void actionPerformed(ActionEvent e) {
-        // Для каждой частицы в списке выполняем движение и проверку столкновения с границами
+        ArrayList<Particle> toRemove = new ArrayList<>();
+        ArrayList<Particle> toAdd = new ArrayList<>();
+
         for (Particle particle : particles) {
             particle.move(particles);
             particle.checkBoundaryCollision(getWidth(), getHeight());
+
+            if (particle instanceof PowderParticle powderParticle) {
+                if (powderParticle.canTransformToFire()) {
+                    toRemove.add(particle);
+                    toRemove.addAll(powderParticle.getAttachedAirParticles());
+                    toRemove.addAll(powderParticle.getAttachedLightParticles());
+                    toAdd.add(new FireParticle(powderParticle.getX(), powderParticle.getY(), 50, randomSpeed() + 4, randomSpeed() + 4));
+                }
+            }
         }
-        repaint(); // Перерисовываем панель
+
+        particles.removeAll(toRemove);
+        particles.addAll(toAdd);
+        repaint();
     }
 }

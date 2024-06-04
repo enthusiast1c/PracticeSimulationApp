@@ -2,33 +2,51 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class PowderParticle extends Particle {
-    private final ArrayList<AirParticle> attachedAirParticles; // Список воздушных частиц, к которым прикреплен порох
+    private final ArrayList<AirParticle> attachedAirParticles;
+    private final ArrayList<LightParticle> attachedLightParticles;
 
     public PowderParticle(int x, int y, int size, int speedX, int speedY) {
         super(x, y, size, speedX, speedY);
-        this.attachedAirParticles = new ArrayList<>(); // Инициализация списка прикрепленных воздушных частиц
+        this.attachedAirParticles = new ArrayList<>();
+        this.attachedLightParticles = new ArrayList<>();
     }
 
     public boolean addAttachedAirParticle(AirParticle airParticle) {
-        if (attachedAirParticles.size() < 10) { // Проверка, что количество прикрепленных частиц не превышает 10
-            attachedAirParticles.add(airParticle); // Добавление воздушной частицы к пороху
+        if (attachedAirParticles.size() < 10) {
+            attachedAirParticles.add(airParticle);
             return true;
         }
-        return false; // Возврат false, если не удалось добавить воздушную частицу из-за превышения лимита
+        return false;
+    }
+
+    public boolean addAttachedLightParticle(LightParticle lightParticle) {
+        if (attachedLightParticles.size() < 20) {
+            attachedLightParticles.add(lightParticle);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean canTransformToFire() {
+        return attachedAirParticles.size() == 10 && attachedLightParticles.size() == 20;
     }
 
     @Override
     public void move(ArrayList<Particle> particles) {
-        super.move(particles); // Переопределенный метод для перемещения пороха
+        super.move(particles);
     }
 
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.GRAY);
-        g.fillOval(x, y, size, size); // Отрисовка частицы пороха в виде серого овала
+        g.fillOval(x, y, size, size);
     }
 
     public ArrayList<AirParticle> getAttachedAirParticles() {
-        return attachedAirParticles; // Метод для получения списка прикрепленных воздушных частиц
+        return attachedAirParticles;
+    }
+
+    public ArrayList<LightParticle> getAttachedLightParticles() {
+        return attachedLightParticles;
     }
 }

@@ -1,22 +1,56 @@
 import java.awt.*;
 import java.util.ArrayList;
 
-// Класс LightParticle, который наследуется от Particle
 public class LightParticle extends Particle {
-    // Конструктор класса LightParticle, принимающий начальные координаты, размер, скорость по X и по Y
+    private PowderParticle attachedPowderParticle;
+    private double angle;
+    private final double angularSpeed;
+
     public LightParticle(int x, int y, int size, int speedX, int speedY) {
-        super(x, y, size, speedX, speedY); // Вызов конструктора суперкласса Particle с переданными параметрами
+        super(x, y, size, speedX, speedY);
+        this.angle = Math.random() * 2 * Math.PI;
+        this.angularSpeed = 0.05; // скорость вращения
     }
 
     @Override
-    public void move(ArrayList<Particle> particles) {// Переопределенный метод move, обеспечивающий простое линейное движение
-        x += speedX; // Обновление координаты x
-        y += speedY; // Обновление координаты y
+    public void move(ArrayList<Particle> particles) {
+        if (attachedPowderParticle == null) {
+            findAndAttachToPowderParticle(particles);
+        }
+        if (attachedPowderParticle != null) {
+            angle += angularSpeed;
+            x = attachedPowderParticle.getX() + (int) (Math.cos(angle) * 60); // 60 - радиус окружности
+            y = attachedPowderParticle.getY() + (int) (Math.sin(angle) * 60);
+        } else {
+            super.move(particles);
+        }
+    }
+
+    private void findAndAttachToPowderParticle(ArrayList<Particle> particles) {
+        Particle nearestPowderParticle = null;
+        double nearestDistance = Double.MAX_VALUE;
+
+        for (Particle particle : particles) {
+            if (particle instanceof PowderParticle) {
+                double distance = distanceTo(particle);
+                if (distance < nearestDistance) {
+                    nearestDistance = distance;
+                    nearestPowderParticle = particle;
+                }
+            }
+        }
+
+        if (nearestPowderParticle != null) {
+            PowderParticle powderParticle = (PowderParticle) nearestPowderParticle;
+            if (powderParticle.addAttachedLightParticle(this)) {
+                this.attachedPowderParticle = powderParticle;
+            }
+        }
     }
 
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.YELLOW);
-        g.fillOval(x, y, size, size); // Рисование желтого круга на переданных координатах
+        g.fillOval(x, y, size, size);
     }
 }

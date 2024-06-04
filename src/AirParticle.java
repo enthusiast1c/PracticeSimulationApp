@@ -44,7 +44,7 @@ public class AirParticle extends Particle {
             }
         }
 
-        if (nearestPowderParticle != null && nearestPowderParticle instanceof PowderParticle) {
+        if (nearestPowderParticle != null) {
             PowderParticle powderParticle = (PowderParticle) nearestPowderParticle;
             if (powderParticle.addAttachedAirParticle(this)) {
                 this.attachedPowderParticle = powderParticle; // Устанавливаем привязанную частицу пороха

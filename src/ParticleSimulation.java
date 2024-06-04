@@ -9,7 +9,7 @@ public class ParticleSimulation extends JFrame {
 
     public ParticleSimulation() {
         setTitle("Particle Simulation Menu");
-        setSize(600, 400);
+        setSize(300, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(5, 1));
 

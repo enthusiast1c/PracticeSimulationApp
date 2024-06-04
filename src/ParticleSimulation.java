@@ -4,7 +4,7 @@ import java.awt.*;
 public class ParticleSimulation extends JFrame {
     public ParticleSimulation() {
         setTitle("Particle Simulation");
-        setSize(800, 600);
+        setSize(1920, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         GamePanel gamePanel = new GamePanel();

@@ -4,60 +4,58 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+// Класс для панели
 public class GamePanel extends JPanel implements ActionListener {
-    private ArrayList<Particle> particles;
-    private Timer timer;
+    private ArrayList<Particle> particles; // Список частиц
+    private Timer timer; // Таймер для обновления анимации
 
+    // Конструктор класса
     public GamePanel() {
-        this.particles = new ArrayList<>();
-        this.timer = new Timer(16, this); // roughly 60 FPS
+        this.particles = new ArrayList<>(); // Создание списка частиц
+        this.timer = new Timer(16, this); // Инициализация таймера с интервалом 16 мс
 
-        // Add initial particles
+        // Добавление нескольких типов частиц в начальное состояние
         for (int i = 0; i < 5; i++) {
             addParticle(new AirParticle(400, 300, 10, randomSpeed() + 4, randomSpeed() + 4));
             addParticle(new PowderParticle(400, 300, 10, randomSpeed() + 4, randomSpeed() + 4));
             addParticle(new LightParticle(400, 300, 10, randomSpeed() + 4, randomSpeed() + 4));
         }
 
-        this.timer.start();
-        setBackground(Color.BLACK);
+        this.timer.start(); // Запуск таймера для начала анимации
+        setBackground(Color.DARK_GRAY); // Установка цвета фона панели
     }
 
-    private int getInitialCenterX() {
-        return (getWidth() - 20) / 2;
-    }
-
-    private int getInitialCenterY() {
-        return (getHeight() - 20) / 2;
-    }
-
+    // Метод для генерации случайной скорости
     private int randomSpeed() {
         return (int) (Math.random() * 6) - 3;
     }
 
+    // Метод для добавления частицы в список
     public void addParticle(Particle particle) {
         particles.add(particle);
     }
 
+    // Переопределение метода отрисовки компонента
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        // Draw boundary
         g.setColor(Color.RED);
         g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
 
+        // Отрисовка каждой частицы в списке
         for (Particle particle : particles) {
             particle.draw(g);
         }
     }
 
+    // Обработчик действий таймера
     @Override
     public void actionPerformed(ActionEvent e) {
+        // Для каждой частицы в списке выполняем движение и проверку столкновения с границами
         for (Particle particle : particles) {
             particle.move(particles);
             particle.checkBoundaryCollision(getWidth(), getHeight());
         }
-        repaint();
+        repaint(); // Перерисовываем панель
     }
 }

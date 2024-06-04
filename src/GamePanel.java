@@ -3,15 +3,18 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 // Класс для панели
 public class GamePanel extends JPanel implements ActionListener {
     private final ArrayList<Particle> particles; // Список частиц
     private Timer timer; // Таймер для обновления анимации
+    private int initialSize;
+    private int initialSpeed;
 
     // Конструктор класса
-    public GamePanel() {
+    public GamePanel(int size, int speed) {
+        this.initialSize = size;
+        this.initialSpeed = speed;
         this.particles = new ArrayList<>(); // Создание списка частиц
         this.timer = new Timer(16, this); // Инициализация таймера с интервалом 16 мс
 
@@ -64,7 +67,7 @@ public class GamePanel extends JPanel implements ActionListener {
                     toRemove.add(particle);
                     toRemove.addAll(powderParticle.getAttachedAirParticles());
                     toRemove.addAll(powderParticle.getAttachedLightParticles());
-                    toAdd.add(new FireParticle(powderParticle.getX(), powderParticle.getY(), 50, randomSpeed() + 4, randomSpeed() + 4));
+                    toAdd.add(new FireParticle(powderParticle.getX(), powderParticle.getY(), 70, randomSpeed() + 4, randomSpeed() + 4));
                 }
             }
         }

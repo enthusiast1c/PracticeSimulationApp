@@ -17,7 +17,7 @@ public class ControlPanel extends JPanel {
         JPanel topPanel = new JPanel(new GridLayout(1, 1));
         //Создание и добавление слайдеров в верхнюю подпанель
         topPanel.add(new JLabel("Speed:"));
-        speedSlider = (JSlider) topPanel.add(new JSlider(2, 20, 7));
+        speedSlider = (JSlider) topPanel.add(new JSlider(2, 10, 5));
         topPanel.add(new JLabel("Size:"));
         sizeSlider = (JSlider) topPanel.add(new JSlider(2, 20, 10));
         topPanel.add(new JPanel());

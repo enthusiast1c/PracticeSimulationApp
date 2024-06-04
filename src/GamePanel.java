@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 // Класс для панели
 public class GamePanel extends JPanel implements ActionListener {
-    private ArrayList<Particle> particles; // Список частиц
+    private final ArrayList<Particle> particles; // Список частиц
     private Timer timer; // Таймер для обновления анимации
 
     // Конструктор класса

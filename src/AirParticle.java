@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class AirParticle extends Particle {
     private PowderParticle attachedPowderParticle; // Привязанная частица пороха
     private double angle; // Угол вращения
-    private double angularSpeed; // Скорость вращения
+    private final double angularSpeed; // Скорость вращения
 
     // Конструктор для создания воздушной частицы
     public AirParticle(int x, int y, int size, int speedX, int speedY) {

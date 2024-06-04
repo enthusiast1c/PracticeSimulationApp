@@ -11,7 +11,7 @@ public class ParticleSimulation extends JFrame {
         ControlPanel controlPanel = new ControlPanel(gamePanel);
 
         add(gamePanel, BorderLayout.CENTER);
-        add(controlPanel, BorderLayout.EAST);
+        add(controlPanel, BorderLayout.NORTH);
     }
 
     public static void main(String[] args) {

@@ -2,7 +2,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class PowderParticle extends Particle {
-    private ArrayList<AirParticle> attachedAirParticles; // Список воздушных частиц, к которым прикреплен порох
+    private final ArrayList<AirParticle> attachedAirParticles; // Список воздушных частиц, к которым прикреплен порох
 
     public PowderParticle(int x, int y, int size, int speedX, int speedY) {
         super(x, y, size, speedX, speedY);

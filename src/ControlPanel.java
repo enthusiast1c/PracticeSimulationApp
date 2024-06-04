@@ -4,34 +4,41 @@ import java.util.Random;
 
 // Класс для создания панели управления
 public class ControlPanel extends JPanel {
-    private JSlider speedSlider; // Слайдер для установки скорости частиц
-    private JSlider sizeSlider; // Слайдер для установки размера частиц
-    private JButton addAirParticleButton; // Кнопка для добавления воздушных частиц
-    private JButton addPowderParticleButton; // Кнопка для добавления частиц порошка
-    private JButton addLightParticleButton; // Кнопка для добавления световых частиц
-    private GamePanel gamePanel; // Панель игры, на которую будут добавляться частицы
-    private Random random = new Random(); // Генератор случайных чисел
+    private final JSlider speedSlider; // Слайдер для установки скорости частиц
+    private final JSlider sizeSlider; // Слайдер для установки размера частиц
+    private final GamePanel gamePanel; // Панель игры, на которую будут добавляться частицы
+    private final Random random = new Random(); // Генератор случайных чисел
 
     // Конструктор класса
     public ControlPanel(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
-        this.setLayout(new GridLayout(4, 2));
+        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        //Создание верхней подпанели
+        JPanel topPanel = new JPanel(new GridLayout(1, 1));
+        //Создание и добавление слайдеров в верхнюю подпанель
+        topPanel.add(new JLabel("Speed:"));
+        speedSlider = (JSlider) topPanel.add(new JSlider(1, 20, 10));
+        topPanel.add(new JLabel("Size:"));
+        sizeSlider = (JSlider) topPanel.add(new JSlider(1, 20, 10));
+        topPanel.add(new JPanel());
 
-        speedSlider = new JSlider(1, 20, 10); // Создание слайдера скорости
-        sizeSlider = new JSlider(1, 20, 10); // Создание слайдера размера
-
-        addAirParticleButton = new JButton("Add 10 Air Particles"); // Создание кнопки добавления воздушных частиц
-        addPowderParticleButton = new JButton("Add 10 Powder Particles"); // Создание кнопки добавления частиц порошка
-        addLightParticleButton = new JButton("Add 10 Light Particles"); // Создание кнопки добавления световых частиц
+        //Создание нижней подпанели
+        JPanel bottomPanel = new JPanel(new GridLayout(1, 3));
+        // Кнопка для добавления воздушных частиц
+        JButton addAirParticleButton = new JButton("Add 10 Air Particles"); // Создание кнопки добавления воздушных частиц
+        // Кнопка для добавления частиц порошка
+        JButton addPowderParticleButton = new JButton("Add 10 Powder Particles"); // Создание кнопки добавления частиц порошка
+        // Кнопка для добавления световых частиц
+        JButton addLightParticleButton = new JButton("Add 10 Light Particles"); // Создание кнопки добавления световых частиц
+        //Добавление кнопок в нижнюю подпанель
+        bottomPanel.add(addAirParticleButton);
+        bottomPanel.add(addPowderParticleButton);
+        bottomPanel.add(addLightParticleButton);
 
         // Добавление элементов на панель управления
-        add(new JLabel("Speed:"));
-        add(speedSlider);
-        add(new JLabel("Size:"));
-        add(sizeSlider);
-        add(addAirParticleButton);
-        add(addPowderParticleButton);
-        add(addLightParticleButton);
+        setLayout(new GridLayout(2, 1));
+        add(topPanel);
+        add(bottomPanel);
 
         // Установка действий на кнопки добавления частиц
         addAirParticleButton.addActionListener(e -> addParticles(AirParticle.class));

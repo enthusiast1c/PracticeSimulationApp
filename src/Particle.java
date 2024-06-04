@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 public abstract class Particle {
     protected int x, y, size, speedX, speedY;
+    protected Image texture;
 
     public Particle(int x, int y, int size, int speedX, int speedY) {
         this.x = x;

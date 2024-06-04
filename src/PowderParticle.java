@@ -1,12 +1,17 @@
-import java.awt.*;
 import java.util.ArrayList;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.util.Objects;
+import javax.swing.ImageIcon;
 
 public class PowderParticle extends Particle {
     private final ArrayList<AirParticle> attachedAirParticles;
     private final ArrayList<LightParticle> attachedLightParticles;
+    private final Image texture;
 
     public PowderParticle(int x, int y, int size, int speedX, int speedY) {
         super(x, y, size, speedX, speedY);
+        this.texture = new ImageIcon(Objects.requireNonNull(getClass().getResource("textures/powder(texture).png"))).getImage();
         this.attachedAirParticles = new ArrayList<>();
         this.attachedLightParticles = new ArrayList<>();
     }
@@ -38,8 +43,7 @@ public class PowderParticle extends Particle {
 
     @Override
     public void draw(Graphics g) {
-        g.setColor(Color.GRAY);
-        g.fillOval(x, y, size, size);
+        g.drawImage(texture, (int)x, (int)y, size, size, null);
     }
 
     public ArrayList<AirParticle> getAttachedAirParticles() {

@@ -19,17 +19,17 @@ public class ControlPanel extends JPanel {
         topPanel.add(new JLabel("Speed:"));
         speedSlider = (JSlider) topPanel.add(new JSlider(2, 10, 5));
         topPanel.add(new JLabel("Size:"));
-        sizeSlider = (JSlider) topPanel.add(new JSlider(2, 20, 10));
+        sizeSlider = (JSlider) topPanel.add(new JSlider(10, 50, 20));
         topPanel.add(new JPanel());
 
         //Создание нижней подпанели
         JPanel bottomPanel = new JPanel(new GridLayout(1, 3));
         // Кнопка для добавления воздушных частиц
-        JButton addAirParticleButton = new JButton("Add 10 Air Particles"); // Создание кнопки добавления воздушных частиц
+        JButton addAirParticleButton = new JButton("Add 15 Air Particles"); // Создание кнопки добавления воздушных частиц
         // Кнопка для добавления частиц порошка
-        JButton addPowderParticleButton = new JButton("Add 10 Powder Particles"); // Создание кнопки добавления частиц порошка
+        JButton addPowderParticleButton = new JButton("Add 15 Powder Particles"); // Создание кнопки добавления частиц порошка
         // Кнопка для добавления световых частиц
-        JButton addLightParticleButton = new JButton("Add 10 Light Particles"); // Создание кнопки добавления световых частиц
+        JButton addLightParticleButton = new JButton("Add 15 Light Particles"); // Создание кнопки добавления световых частиц
         //Добавление кнопок в нижнюю подпанель
         bottomPanel.add(addAirParticleButton);
         bottomPanel.add(addPowderParticleButton);
@@ -49,7 +49,7 @@ public class ControlPanel extends JPanel {
     // Метод для добавления частиц на игровую панель
     private void addParticles(Class<? extends Particle> particleClass) {
         // Добавляем 10 частиц с указанным классом
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 15; i++) {
             Particle particle;
             int size = sizeSlider.getValue();
             int speedX = randomSpeed();

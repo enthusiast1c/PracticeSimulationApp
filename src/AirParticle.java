@@ -1,15 +1,20 @@
-import java.awt.*;
 import java.util.ArrayList;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.util.Objects;
+import javax.swing.ImageIcon;
 
 // Класс представляющий воздушную частицу
 public class AirParticle extends Particle {
     private PowderParticle attachedPowderParticle; // Привязанная частица пороха
     private double angle; // Угол вращения
-    private final double angularSpeed; // Скорость вращения
+    private final double angularSpeed; // Скорость
+    private final Image texture;
 
     // Конструктор для создания воздушной частицы
     public AirParticle(int x, int y, int size, int speedX, int speedY) {
         super(x, y, size, speedX, speedY);
+        this.texture = new ImageIcon(Objects.requireNonNull(getClass().getResource("textures/air(texture).png"))).getImage();
         this.angle = Math.random() * 2 * Math.PI; // Устанавливаем случайный угол
         this.angularSpeed = 0.05; // Устанавливаем скорость вращения
     }
@@ -22,8 +27,8 @@ public class AirParticle extends Particle {
         }
         if (attachedPowderParticle != null) {
             angle += angularSpeed; // Увеличиваем угол
-            x = attachedPowderParticle.getX() + (int) (Math.cos(angle) * 30); // Перемещаем по x
-            y = attachedPowderParticle.getY() + (int) (Math.sin(angle) * 30); // Перемещаем по y
+            x = attachedPowderParticle.getX() + (int) (Math.cos(angle) * 40); // Перемещаем по x
+            y = attachedPowderParticle.getY() + (int) (Math.sin(angle) * 40); // Перемещаем по y
         } else {
             super.move(particles); // Если нет привязанной частицы пороха, используем обычное перемещение
         }
@@ -55,7 +60,6 @@ public class AirParticle extends Particle {
     // Метод для отрисовки воздушной частицы
     @Override
     public void draw(Graphics g) {
-        g.setColor(Color.BLUE);
-        g.fillOval(x, y, size, size); // Рисуем круг в цвете синего
+        g.drawImage(texture, (int)x, (int)y, size, size, null);
     }
 }

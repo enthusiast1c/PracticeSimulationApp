@@ -1,13 +1,20 @@
 import java.awt.*;
 import java.util.ArrayList;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.util.Objects;
+import javax.swing.ImageIcon;
+
 
 public class LightParticle extends Particle {
     private PowderParticle attachedPowderParticle;
     private double angle;
     private final double angularSpeed;
+    private final Image texture;
 
     public LightParticle(int x, int y, int size, int speedX, int speedY) {
         super(x, y, size, speedX, speedY);
+        this.texture = new ImageIcon(Objects.requireNonNull(getClass().getResource("textures/light(texture).png"))).getImage();
         this.angle = Math.random() * 2 * Math.PI;
         this.angularSpeed = 0.05; // скорость вращения
     }
@@ -19,8 +26,8 @@ public class LightParticle extends Particle {
         }
         if (attachedPowderParticle != null) {
             angle += angularSpeed;
-            x = attachedPowderParticle.getX() + (int) (Math.cos(angle) * 60); // 60 - радиус окружности
-            y = attachedPowderParticle.getY() + (int) (Math.sin(angle) * 60);
+            x = attachedPowderParticle.getX() + (int) (Math.cos(angle) * 65); // 65 - радиус окружности
+            y = attachedPowderParticle.getY() + (int) (Math.sin(angle) * 65);
         } else {
             super.move(particles);
         }
@@ -50,7 +57,6 @@ public class LightParticle extends Particle {
 
     @Override
     public void draw(Graphics g) {
-        g.setColor(Color.YELLOW);
-        g.fillOval(x, y, size, size);
+        g.drawImage(texture, (int)x, (int)y, size, size, null);
     }
 }

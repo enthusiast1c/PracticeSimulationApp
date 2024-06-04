@@ -14,7 +14,7 @@ public class ParticleSimulation extends JFrame {
         setLayout(new GridLayout(5, 1));
 
         speedSlider = new JSlider(2, 10, 5);
-        sizeSlider = new JSlider(2, 20, 10);
+        sizeSlider = new JSlider(10, 50, 20);
         JButton startButton = new JButton("Start");
 
         add(new JLabel("Speed:"));

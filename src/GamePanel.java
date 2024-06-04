@@ -20,9 +20,9 @@ public class GamePanel extends JPanel implements ActionListener {
 
         // Добавление нескольких типов частиц в начальное состояние
         for (int i = 0; i < 5; i++) {
-            addParticle(new AirParticle(400, 300, 10, randomSpeed() + 4, randomSpeed() + 4));
-            addParticle(new PowderParticle(400, 300, 10, randomSpeed() + 4, randomSpeed() + 4));
-            addParticle(new LightParticle(400, 300, 10, randomSpeed() + 4, randomSpeed() + 4));
+            addParticle(new AirParticle(400, 300, 20, randomSpeed() + 4, randomSpeed() + 4));
+            addParticle(new PowderParticle(400, 300, 20, randomSpeed() + 4, randomSpeed() + 4));
+            addParticle(new LightParticle(400, 300, 20, randomSpeed() + 4, randomSpeed() + 4));
         }
 
         this.timer.start(); // Запуск таймера для начала анимации

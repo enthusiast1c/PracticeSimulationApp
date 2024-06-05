@@ -8,27 +8,25 @@ import java.util.Random;
 // Класс для панели
 public class GamePanel extends JPanel implements ActionListener {
     private final ArrayList<Particle> particles; // Список частиц
-    private Timer timer; // Таймер для обновления анимации
     private final Random random = new Random(); // Генератор случайных чисел
-    private int initialSize;
-    private int initialSpeed;
+    private final int initialSpeed;
 
 
     // Конструктор класса
     public GamePanel(int size, int speed) {
-        this.initialSize = size;
         this.initialSpeed = speed;
         this.particles = new ArrayList<>(); // Создание списка частиц
-        this.timer = new Timer(16, this); // Инициализация таймера с интервалом 16 мс
+        // Таймер для обновления анимации
+        Timer timer = new Timer(16, this); // Инициализация таймера с интервалом 16 мс
 
         // Добавление нескольких типов частиц в начальное состояние
         for (int i = 0; i < 5; i++) {
-            addParticle(new AirParticle(400, 300, this.initialSize, randomSpeed(), randomSpeed()));
-            addParticle(new PowderParticle(400, 300, this.initialSize, randomSpeed(), randomSpeed()));
-            addParticle(new LightParticle(400, 300, this.initialSize, randomSpeed(), randomSpeed()));
+            addParticle(new AirParticle(400, 300, size, randomSpeed(), randomSpeed()));
+            addParticle(new PowderParticle(400, 300, size, randomSpeed(), randomSpeed()));
+            addParticle(new LightParticle(400, 300, size, randomSpeed(), randomSpeed()));
         }
 
-        this.timer.start(); // Запуск таймера для начала анимации
+        timer.start(); // Запуск таймера для начала анимации
         setBackground(Color.DARK_GRAY); // Установка цвета фона панели
     }
 
@@ -70,7 +68,7 @@ public class GamePanel extends JPanel implements ActionListener {
                     toRemove.add(particle);
                     toRemove.addAll(powderParticle.getAttachedAirParticles());
                     toRemove.addAll(powderParticle.getAttachedLightParticles());
-                    toAdd.add(new FireParticle(powderParticle.getX(), powderParticle.getY(), 70, randomSpeed() + 4, randomSpeed() + 4));
+                    toAdd.add(new FireParticle(powderParticle.getX(), powderParticle.getY(), 110, randomSpeed()+5, randomSpeed()+5));
                 }
             }
         }

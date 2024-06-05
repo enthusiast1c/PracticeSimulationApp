@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Random;
 
 // Класс для создания панели управления
@@ -30,6 +32,11 @@ public class ControlPanel extends JPanel {
         JButton addPowderParticleButton = new JButton("Add 15 Powder Particles"); // Создание кнопки добавления частиц порошка
         // Кнопка для добавления световых частиц
         JButton addLightParticleButton = new JButton("Add 15 Light Particles"); // Создание кнопки добавления световых частиц
+        // Установление цвета кнопки
+        addAirParticleButton.setBackground(Color.CYAN);
+        addPowderParticleButton.setBackground(Color.LIGHT_GRAY);
+        addLightParticleButton.setBackground(Color.YELLOW);
+
         //Добавление кнопок в нижнюю подпанель
         bottomPanel.add(addAirParticleButton);
         bottomPanel.add(addPowderParticleButton);

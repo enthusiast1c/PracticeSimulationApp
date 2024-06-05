@@ -16,6 +16,7 @@ public class ParticleSimulation extends JFrame {
         speedSlider = new JSlider(2, 10, 5);
         sizeSlider = new JSlider(10, 50, 20);
         JButton startButton = new JButton("Start");
+        startButton.setBackground(Color.GREEN);
 
         add(new JLabel("Speed:"));
         add(speedSlider);
@@ -54,6 +55,7 @@ public class ParticleSimulation extends JFrame {
 
         // Add restart button
         JButton restartButton = new JButton("Restart");
+        restartButton.setBackground(Color.GREEN);
         restartButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

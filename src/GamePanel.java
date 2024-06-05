@@ -3,13 +3,16 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Random;
 
 // Класс для панели
 public class GamePanel extends JPanel implements ActionListener {
     private final ArrayList<Particle> particles; // Список частиц
     private Timer timer; // Таймер для обновления анимации
+    private final Random random = new Random(); // Генератор случайных чисел
     private int initialSize;
     private int initialSpeed;
+
 
     // Конструктор класса
     public GamePanel(int size, int speed) {
@@ -20,9 +23,9 @@ public class GamePanel extends JPanel implements ActionListener {
 
         // Добавление нескольких типов частиц в начальное состояние
         for (int i = 0; i < 5; i++) {
-            addParticle(new AirParticle(400, 300, 20, randomSpeed() + 4, randomSpeed() + 4));
-            addParticle(new PowderParticle(400, 300, 20, randomSpeed() + 4, randomSpeed() + 4));
-            addParticle(new LightParticle(400, 300, 20, randomSpeed() + 4, randomSpeed() + 4));
+            addParticle(new AirParticle(400, 300, this.initialSize, randomSpeed(), randomSpeed()));
+            addParticle(new PowderParticle(400, 300, this.initialSize, randomSpeed(), randomSpeed()));
+            addParticle(new LightParticle(400, 300, this.initialSize, randomSpeed(), randomSpeed()));
         }
 
         this.timer.start(); // Запуск таймера для начала анимации
@@ -31,7 +34,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     // Метод для генерации случайной скорости
     private int randomSpeed() {
-        return (int) (Math.random() * 6) - 3;
+        return random.nextInt(this.initialSpeed * 2 + 1) - this.initialSpeed;
     }
 
     // Метод для добавления частицы в список

@@ -38,6 +38,18 @@ public class ParticleSimulation extends JFrame {
     private void startSimulation(int speed, int size) {
         JFrame simulationFrame = new JFrame("Particle Simulation");
         GamePanel gamePanel = new GamePanel(size, speed);
+        JPanel panel = getjPanel(gamePanel, simulationFrame);
+
+        simulationFrame.setLayout(new BorderLayout());
+        simulationFrame.add(gamePanel, BorderLayout.CENTER);
+        simulationFrame.add(panel, BorderLayout.NORTH);
+        simulationFrame.setSize(1920, 1080);
+        simulationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        simulationFrame.setVisible(true);
+        dispose(); // Close the menu window
+    }
+
+    private static JPanel getjPanel(GamePanel gamePanel, JFrame simulationFrame) {
         ControlPanel controlPanel = new ControlPanel(gamePanel);
 
         // Add restart button
@@ -52,14 +64,7 @@ public class ParticleSimulation extends JFrame {
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(controlPanel, BorderLayout.CENTER);
         panel.add(restartButton, BorderLayout.SOUTH);
-
-        simulationFrame.setLayout(new BorderLayout());
-        simulationFrame.add(gamePanel, BorderLayout.CENTER);
-        simulationFrame.add(panel, BorderLayout.NORTH);
-        simulationFrame.setSize(1920, 1080);
-        simulationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        simulationFrame.setVisible(true);
-        dispose(); // Close the menu window
+        return panel;
     }
 
     public static void main(String[] args) {

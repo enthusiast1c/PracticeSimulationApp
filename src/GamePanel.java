@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 // Класс для панели
@@ -10,6 +11,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private final ArrayList<Particle> particles; // Список частиц
     private final Random random = new Random(); // Генератор случайных чисел
     private final int initialSpeed;
+    private final Image texture;
 
     // Конструктор класса
     public GamePanel(int size, int speed) {
@@ -26,7 +28,7 @@ public class GamePanel extends JPanel implements ActionListener {
         }
 
         timer.start(); // Запуск таймера для начала анимации
-        setBackground(Color.DARK_GRAY); // Установка цвета фона панели
+        this.texture = new ImageIcon(Objects.requireNonNull(getClass().getResource("textures/background.png"))).getImage();
     }
 
     // Метод для генерации случайной скорости
@@ -43,6 +45,10 @@ public class GamePanel extends JPanel implements ActionListener {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        if (texture != null) {
+            g.drawImage(texture, 0, 0, getWidth(), getHeight(), this);
+        }
+
         g.setColor(Color.RED);
         g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
 

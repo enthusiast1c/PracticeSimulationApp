@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,9 +15,19 @@ public class ParticleSimulation extends JFrame {
         setLayout(new GridLayout(5, 1));
 
         speedSlider = new JSlider(2, 10, 5);
+        speedSlider.setMajorTickSpacing(2);
+        speedSlider.setMinorTickSpacing(2);
+        speedSlider.setPaintTicks(true);
+        speedSlider.setPaintLabels(true);
         sizeSlider = new JSlider(10, 50, 20);
+        sizeSlider.setMajorTickSpacing(10);
+        sizeSlider.setMinorTickSpacing(10);
+        sizeSlider.setPaintTicks(true);
+        sizeSlider.setPaintLabels(true);
         JButton startButton = new JButton("Start");
         startButton.setBackground(Color.GREEN);
+
+
 
         add(new JLabel("Speed:",JLabel.CENTER));
         add(speedSlider);

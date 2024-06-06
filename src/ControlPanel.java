@@ -35,6 +35,7 @@ public class ControlPanel extends JPanel {
         speedSlider = (JSlider) topPanel.add(new JSlider(2, 10, 5));
         sizeSlider = (JSlider) topPanel.add(new JSlider(10, 50, 20));
 
+
         //Создание нижней подпанели
         JPanel bottomPanel = new JPanel(new GridLayout(1, 3));
         // Кнопка для добавления воздушных частиц
@@ -71,8 +72,6 @@ public class ControlPanel extends JPanel {
         add(topPanel);
         add(autoPanel);
         add(bottomPanel);
-
-
 
         // Установка действий на кнопки добавления частиц
         addAirParticleButton.addActionListener(e -> addParticles(AirParticle.class));

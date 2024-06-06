@@ -85,7 +85,14 @@ public class ControlPanel extends JPanel {
             startAutoSim(duration);
             startAutoSimButton.setVisible(false);
             stopAutoSimButton.setVisible(true);
+        });
+        stopAutoSimButton.addActionListener(e -> {
+            stopAutoSimButton.setVisible(false);
             resumeAutoSimButton.setVisible(true);
+        });
+        resumeAutoSimButton.addActionListener(e -> {
+            stopAutoSimButton.setVisible(true);
+            resumeAutoSimButton.setVisible(false);
         });
 
         stopAutoSimButton.addActionListener(e -> stopAutoSim());
@@ -173,8 +180,10 @@ public class ControlPanel extends JPanel {
             for (int i = 0; i < 10; i++) {
                 gamePanel.addParticle(new LightParticle(randomX(), randomY(), sizeSlider.getValue(), randomSpeed(), randomSpeed()));
             }
-            for (int i = 0; i < 1; i++) {
-                gamePanel.addParticle(new PowderParticle(randomX(), randomY(), sizeSlider.getValue(), randomSpeed(), randomSpeed()));
+            if(elapsedAutoSimTime % 5 == 0) {
+                for (int i = 0; i < 1; i++) {
+                    gamePanel.addParticle(new PowderParticle(randomX(), randomY(), sizeSlider.getValue(), randomSpeed(), randomSpeed()));
+                }
             }
 
             elapsedAutoSimTime += 2;

@@ -49,7 +49,7 @@ public class GamePanel extends JPanel implements ActionListener {
             g.drawImage(texture, 0, 0, getWidth(), getHeight(), this);
         }
 
-        g.setColor(Color.RED);
+        g.setColor(Color.ORANGE);
         g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
 
         // Отрисовка каждой частицы в списке

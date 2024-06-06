@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,43 +31,65 @@ public class ControlPanel extends JPanel {
         //Создание верхней подпанели
         JPanel topPanel = new JPanel(new GridLayout(2, 2));
         //Создание и добавление слайдеров в верхнюю подпанель
-        topPanel.add(new JLabel("Speed:", JLabel.CENTER));
-        topPanel.add(new JLabel("Size:",JLabel.CENTER));
+        JLabel speedLabel = new JLabel("Particle Speed:", JLabel.CENTER);
+        speedLabel.setFont(new Font("Consolas", Font.BOLD, 14));
+        speedLabel.setForeground(Color.ORANGE);
+        JLabel sizeLabel = new JLabel("Particle Size:",JLabel.CENTER);
+        sizeLabel.setFont(new Font("Consolas", Font.BOLD, 14));
+        sizeLabel.setForeground(Color.ORANGE);
+        topPanel.add(speedLabel);
+        topPanel.add(sizeLabel);
         speedSlider = (JSlider) topPanel.add(new JSlider(2, 10, 5));
         sizeSlider = (JSlider) topPanel.add(new JSlider(10, 50, 20));
-
-
+        topPanel.setBackground(Color.DARK_GRAY);
+        speedSlider.setBackground(Color.DARK_GRAY);
+        sizeSlider.setBackground(Color.DARK_GRAY);
         //Создание нижней подпанели
         JPanel bottomPanel = new JPanel(new GridLayout(1, 3));
         // Кнопка для добавления воздушных частиц
-        JButton addAirParticleButton = new JButton("Add 15 Air Particles"); // Создание кнопки добавления воздушных частиц
+        JButton addAirParticleButton = new JButton("Create 15 Air Particles"); // Создание кнопки добавления воздушных частиц
         // Кнопка для добавления частиц порошка
-        JButton addPowderParticleButton = new JButton("Add 15 Powder Particles"); // Создание кнопки добавления частиц порошка
+        JButton addPowderParticleButton = new JButton("Create 15 Powder Particles"); // Создание кнопки добавления частиц порошка
         // Кнопка для добавления световых частиц
-        JButton addLightParticleButton = new JButton("Add 15 Light Particles"); // Создание кнопки добавления световых частиц
+        JButton addLightParticleButton = new JButton("Create 15 Light Particles"); // Создание кнопки добавления световых частиц
         // Установление цвета кнопки
-        addAirParticleButton.setBackground(Color.CYAN);
-        addPowderParticleButton.setBackground(Color.MAGENTA);
-        addLightParticleButton.setBackground(Color.YELLOW);
+        addAirParticleButton.setBackground(Color.ORANGE);
+        addPowderParticleButton.setBackground(Color.ORANGE);
+        addLightParticleButton.setBackground(Color.ORANGE);
 
         //Добавление кнопок в нижнюю подпанель
         bottomPanel.add(addAirParticleButton);
         bottomPanel.add(addPowderParticleButton);
         bottomPanel.add(addLightParticleButton);
+        bottomPanel.setBackground(Color.DARK_GRAY);
         //Создание авто подпанели
-        JPanel autoPanel = new JPanel(new GridLayout(1, 4));
+        JPanel autoPanel = new JPanel(new GridLayout(1, 2));
         startAutoSimButton = new JButton("Start Auto Simulation");
+        startAutoSimButton.setForeground(Color.DARK_GRAY);
+        startAutoSimButton.setBackground(Color.ORANGE);
         stopAutoSimButton = new JButton("Stop Auto Simulation");
+        stopAutoSimButton.setForeground(Color.DARK_GRAY);
+        stopAutoSimButton.setBackground(Color.ORANGE);
         resumeAutoSimButton = new JButton("Resume Auto Simulation");
+        resumeAutoSimButton.setForeground(Color.DARK_GRAY);
+        resumeAutoSimButton.setBackground(Color.ORANGE);
+
         JTextField autoSimDurationField = new JTextField("10");
+        autoSimDurationField.setBackground(Color.LIGHT_GRAY);
+        autoSimDurationField.setFont(new Font("Consolas", Font.BOLD, 14));
+        JLabel autoSimLabel = new JLabel("Auto Sim Duration (s):",SwingConstants.CENTER);
+        autoSimLabel.setFont(new Font("Consolas", Font.BOLD, 14));
+        autoSimLabel.setForeground(Color.ORANGE);
         //Добавление кнопок в авто подпанель
-        autoPanel.add(new JLabel("Auto Sim Duration (s):"));
+        autoPanel.add(autoSimLabel);
         autoPanel.add(autoSimDurationField);
         autoPanel.add(startAutoSimButton);
         autoPanel.add(stopAutoSimButton);
         autoPanel.add(resumeAutoSimButton);
         stopAutoSimButton.setVisible(false);
         resumeAutoSimButton.setVisible(false);
+        autoPanel.setBackground(Color.DARK_GRAY);
+
         // Добавление элементов на панель управления
         setLayout(new GridLayout(3, 1));
         add(topPanel);
@@ -96,6 +119,15 @@ public class ControlPanel extends JPanel {
 
         stopAutoSimButton.addActionListener(e -> stopAutoSim());
         resumeAutoSimButton.addActionListener(e -> resumeAutoSim());
+
+        // Установка шрифта для кнопок
+        Font buttonFont = new Font("Consolas", Font.BOLD, 14);
+        addAirParticleButton.setFont(buttonFont);
+        addPowderParticleButton.setFont(buttonFont);
+        addLightParticleButton.setFont(buttonFont);
+        startAutoSimButton.setFont(buttonFont);
+        stopAutoSimButton.setFont(buttonFont);
+        resumeAutoSimButton.setFont(buttonFont);
     }
     public void resetAutoSimButtons() {
         startAutoSimButton.setVisible(true);

@@ -11,7 +11,6 @@ public class GamePanel extends JPanel implements ActionListener {
     private final Random random = new Random(); // Генератор случайных чисел
     private final int initialSpeed;
 
-
     // Конструктор класса
     public GamePanel(int size, int speed) {
         this.initialSpeed = speed;

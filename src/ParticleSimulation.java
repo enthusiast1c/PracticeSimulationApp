@@ -24,13 +24,10 @@ public class ParticleSimulation extends JFrame {
         add(sizeSlider);
         add(startButton);
 
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int speed = speedSlider.getValue();
-                int size = sizeSlider.getValue();
-                startSimulation(speed, size);
-            }
+        startButton.addActionListener(e -> {
+            int speed = speedSlider.getValue();
+            int size = sizeSlider.getValue();
+            startSimulation(speed, size);
         });
 
         setLocationRelativeTo(null);

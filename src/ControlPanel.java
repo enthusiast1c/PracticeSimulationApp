@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
 
 // Класс для создания панели управления
@@ -7,10 +9,22 @@ public class ControlPanel extends JPanel {
     private final JSlider speedSlider; // Слайдер для установки скорости частиц
     private final JSlider sizeSlider; // Слайдер для установки размера частиц
     private final GamePanel gamePanel; // Панель игры, на которую будут добавляться частицы
+    private final Timer autoSimTimer;
+    private boolean autoSimRunning;
+    private int autoSimDuration;
+    private int elapsedAutoSimTime;
+    private final JButton startAutoSimButton;
+    private final JButton stopAutoSimButton;
+    private final JButton resumeAutoSimButton;
     private final Random random = new Random(); // Генератор случайных чисел
 
     // Конструктор класса
     public ControlPanel(GamePanel gamePanel) {
+        this.autoSimTimer = new Timer(2000, new ControlPanel.AutoSimAction());
+        this.autoSimRunning = false;
+        this.autoSimDuration = 0;
+        this.elapsedAutoSimTime = 0;
+
         this.gamePanel = gamePanel;
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         //Создание верхней подпанели
@@ -40,15 +54,49 @@ public class ControlPanel extends JPanel {
         bottomPanel.add(addPowderParticleButton);
         bottomPanel.add(addLightParticleButton);
 
+        JPanel autoPanel = new JPanel(new GridLayout(1, 4));
+        startAutoSimButton = new JButton("Start Auto Simulation");
+        stopAutoSimButton = new JButton("Stop Auto Simulation");
+        resumeAutoSimButton = new JButton("Resume Auto Simulation");
+        JTextField autoSimDurationField = new JTextField("10");
+
+        autoPanel.add(new JLabel("Auto Sim Duration (s):"));
+        autoPanel.add(autoSimDurationField);
+        autoPanel.add(startAutoSimButton);
+        autoPanel.add(stopAutoSimButton);
+        autoPanel.add(resumeAutoSimButton);
+
+        stopAutoSimButton.setVisible(false);
+        resumeAutoSimButton.setVisible(false);
         // Добавление элементов на панель управления
-        setLayout(new GridLayout(2, 1));
+        setLayout(new GridLayout(3, 1));
+        add(autoPanel);
         add(topPanel);
         add(bottomPanel);
+
+
 
         // Установка действий на кнопки добавления частиц
         addAirParticleButton.addActionListener(e -> addParticles(AirParticle.class));
         addPowderParticleButton.addActionListener(e -> addParticles(PowderParticle.class));
         addLightParticleButton.addActionListener(e -> addParticles(LightParticle.class));
+
+
+        startAutoSimButton.addActionListener(e -> {
+            int duration = Integer.parseInt(autoSimDurationField.getText());
+            startAutoSim(duration);
+            startAutoSimButton.setVisible(false);
+            stopAutoSimButton.setVisible(true);
+            resumeAutoSimButton.setVisible(true);
+        });
+
+        stopAutoSimButton.addActionListener(e -> stopAutoSim());
+        resumeAutoSimButton.addActionListener(e -> resumeAutoSim());
+    }
+    public void resetAutoSimButtons() {
+        startAutoSimButton.setVisible(true);
+        stopAutoSimButton.setVisible(false);
+        resumeAutoSimButton.setVisible(false);
     }
 
     // Метод для добавления частиц на игровую панель
@@ -90,5 +138,48 @@ public class ControlPanel extends JPanel {
     private int randomSpeed() {
         int speed = speedSlider.getValue();
         return random.nextInt(speed * 2 + 1) - speed;
+    }
+
+    public void startAutoSim(int duration) {
+        this.autoSimDuration = duration;
+        this.elapsedAutoSimTime = 0;
+        this.autoSimRunning = true;
+        this.autoSimTimer.start();
+    }
+
+    public void stopAutoSim() {
+        this.autoSimRunning = false;
+        this.autoSimTimer.stop();
+    }
+
+    public void resumeAutoSim() {
+        this.autoSimRunning = true;
+        this.autoSimTimer.start();
+    }
+    public void resetAutoSim() {
+        this.autoSimRunning = false;
+        this.autoSimTimer.stop();
+        resetAutoSimButtons();
+    }
+
+    private class AutoSimAction implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (elapsedAutoSimTime >= autoSimDuration) {
+                resetAutoSim();
+                return;
+            }
+            for (int i = 0; i < 5; i++) {
+                gamePanel.addParticle(new AirParticle(randomX(), randomY(), sizeSlider.getValue(), randomSpeed(), randomSpeed()));
+            }
+            for (int i = 0; i < 10; i++) {
+                gamePanel.addParticle(new LightParticle(randomX(), randomY(), sizeSlider.getValue(), randomSpeed(), randomSpeed()));
+            }
+            for (int i = 0; i < 1; i++) {
+                gamePanel.addParticle(new PowderParticle(randomX(), randomY(), sizeSlider.getValue(), randomSpeed(), randomSpeed()));
+            }
+
+            elapsedAutoSimTime += 2;
+        }
     }
 }

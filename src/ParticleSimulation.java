@@ -1,8 +1,9 @@
 import javax.swing.*;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class ParticleSimulation extends JFrame {
     private final JSlider speedSlider;
@@ -11,7 +12,8 @@ public class ParticleSimulation extends JFrame {
     public ParticleSimulation() {
         setTitle("Particle Simulation Menu");
         setSize(300, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        setResizable(false);
         setLayout(new GridLayout(5, 1));
 
         speedSlider = new JSlider(2, 10, 5);
@@ -27,11 +29,9 @@ public class ParticleSimulation extends JFrame {
         JButton startButton = new JButton("Start");
         startButton.setBackground(Color.GREEN);
 
-
-
-        add(new JLabel("Speed:",JLabel.CENTER));
+        add(new JLabel("Particle speed:", JLabel.CENTER));
         add(speedSlider);
-        add(new JLabel("Size:",JLabel.CENTER));
+        add(new JLabel("Particle size:", JLabel.CENTER));
         add(sizeSlider);
         add(startButton);
 
@@ -42,6 +42,22 @@ public class ParticleSimulation extends JFrame {
         });
 
         setLocationRelativeTo(null);
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int confirmed = JOptionPane.showConfirmDialog(
+                        ParticleSimulation.this,
+                        "Are you sure you want to exit the application?",
+                        "Exit Confirmation",
+                        JOptionPane.YES_NO_OPTION
+                );
+
+                if (confirmed == JOptionPane.YES_OPTION) {
+                    dispose();
+                }
+            }
+        });
     }
 
     private void startSimulation(int speed, int size) {
@@ -53,9 +69,26 @@ public class ParticleSimulation extends JFrame {
         simulationFrame.add(gamePanel, BorderLayout.CENTER);
         simulationFrame.add(panel, BorderLayout.NORTH);
         simulationFrame.setSize(1920, 1080);
-        simulationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        simulationFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         simulationFrame.setVisible(true);
         dispose(); // Close the menu window
+
+        simulationFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int confirmed = JOptionPane.showConfirmDialog(
+                        simulationFrame,
+                        "Are you sure you want to exit the application?",
+                        "Exit Confirmation",
+                        JOptionPane.YES_NO_OPTION
+                );
+
+                if (confirmed == JOptionPane.YES_OPTION) {
+                    simulationFrame.dispose();
+                    System.exit(0);
+                }
+            }
+        });
     }
 
     private static JPanel getjPanel(GamePanel gamePanel, JFrame simulationFrame) {

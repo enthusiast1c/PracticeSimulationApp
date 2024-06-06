@@ -28,13 +28,12 @@ public class ControlPanel extends JPanel {
         this.gamePanel = gamePanel;
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         //Создание верхней подпанели
-        JPanel topPanel = new JPanel(new GridLayout(1, 1));
+        JPanel topPanel = new JPanel(new GridLayout(2, 2));
         //Создание и добавление слайдеров в верхнюю подпанель
-        topPanel.add(new JLabel("Speed:"));
+        topPanel.add(new JLabel("Speed:", JLabel.CENTER));
+        topPanel.add(new JLabel("Size:",JLabel.CENTER));
         speedSlider = (JSlider) topPanel.add(new JSlider(2, 10, 5));
-        topPanel.add(new JLabel("Size:"));
         sizeSlider = (JSlider) topPanel.add(new JSlider(10, 50, 20));
-        topPanel.add(new JPanel());
 
         //Создание нижней подпанели
         JPanel bottomPanel = new JPanel(new GridLayout(1, 3));
@@ -53,25 +52,24 @@ public class ControlPanel extends JPanel {
         bottomPanel.add(addAirParticleButton);
         bottomPanel.add(addPowderParticleButton);
         bottomPanel.add(addLightParticleButton);
-
+        //Создание авто подпанели
         JPanel autoPanel = new JPanel(new GridLayout(1, 4));
         startAutoSimButton = new JButton("Start Auto Simulation");
         stopAutoSimButton = new JButton("Stop Auto Simulation");
         resumeAutoSimButton = new JButton("Resume Auto Simulation");
         JTextField autoSimDurationField = new JTextField("10");
-
+        //Добавление кнопок в авто подпанель
         autoPanel.add(new JLabel("Auto Sim Duration (s):"));
         autoPanel.add(autoSimDurationField);
         autoPanel.add(startAutoSimButton);
         autoPanel.add(stopAutoSimButton);
         autoPanel.add(resumeAutoSimButton);
-
         stopAutoSimButton.setVisible(false);
         resumeAutoSimButton.setVisible(false);
         // Добавление элементов на панель управления
         setLayout(new GridLayout(3, 1));
-        add(autoPanel);
         add(topPanel);
+        add(autoPanel);
         add(bottomPanel);
 
 

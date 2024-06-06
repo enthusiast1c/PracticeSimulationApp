@@ -18,9 +18,9 @@ public class ParticleSimulation extends JFrame {
         JButton startButton = new JButton("Start");
         startButton.setBackground(Color.GREEN);
 
-        add(new JLabel("Speed:"));
+        add(new JLabel("Speed:",JLabel.CENTER));
         add(speedSlider);
-        add(new JLabel("Size:"));
+        add(new JLabel("Size:",JLabel.CENTER));
         add(sizeSlider);
         add(startButton);
 

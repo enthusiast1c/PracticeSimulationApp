@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Hashtable;
 
 public class ParticleSimulation extends JFrame {
     private final JSlider speedSlider;
@@ -18,16 +19,32 @@ public class ParticleSimulation extends JFrame {
 
         speedSlider = new JSlider(2, 10, 5);
         speedSlider.setBackground(Color.DARK_GRAY);
-        speedSlider.setMajorTickSpacing(2);
+        speedSlider.setMajorTickSpacing(1);
         speedSlider.setMinorTickSpacing(2);
         speedSlider.setPaintTicks(true);
         speedSlider.setPaintLabels(true);
+        // Создаем Hashtable для цвета меток слайдера скорости
+        Hashtable<Integer, JLabel> speedLabels = new Hashtable<>();
+        for (int i = speedSlider.getMinimum(); i <= speedSlider.getMaximum(); i += 2) {
+            JLabel label = new JLabel(String.valueOf(i));
+            label.setForeground(Color.ORANGE); // Устанавливаем оранжевый цвет меток
+            speedLabels.put(i, label);
+        }
+        speedSlider.setLabelTable(speedLabels);
         sizeSlider = new JSlider(10, 50, 20);
         sizeSlider.setBackground(Color.DARK_GRAY);
-        sizeSlider.setMajorTickSpacing(10);
+        sizeSlider.setMajorTickSpacing(5);
         sizeSlider.setMinorTickSpacing(10);
         sizeSlider.setPaintTicks(true);
         sizeSlider.setPaintLabels(true);
+        // Создаем Hashtable для цвета меток слайдера размера
+        Hashtable<Integer, JLabel> sizeLabels = new Hashtable<>();
+        for (int i = sizeSlider.getMinimum(); i <= sizeSlider.getMaximum(); i += 10) {
+            JLabel label = new JLabel(String.valueOf(i));
+            label.setForeground(Color.ORANGE); // Устанавливаем оранжевый цвет меток
+            sizeLabels.put(i, label);
+        }
+        sizeSlider.setLabelTable(sizeLabels);
         JButton startButton = new JButton("Start");
         startButton.setBackground(Color.ORANGE);
 
@@ -36,7 +53,7 @@ public class ParticleSimulation extends JFrame {
         speedLabel.setForeground(Color.ORANGE);
         add(speedLabel);
         add(speedSlider);
-        JLabel sizeLabel = new JLabel("Partical Size:",JLabel.CENTER);
+        JLabel sizeLabel = new JLabel("Particle Size:",JLabel.CENTER);
         sizeLabel.setFont(new Font("Consolas", Font.BOLD, 17));
         sizeLabel.setForeground(Color.ORANGE);
         add(sizeLabel);

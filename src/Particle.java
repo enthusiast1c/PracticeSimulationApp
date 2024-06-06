@@ -34,8 +34,20 @@ public abstract class Particle {
         if (x < 0 || x > width - size) {
             speedX = -speedX;
         }
+        if(x > width){
+            x = width - size;
+        }
+        if(x < 0){
+            x = 0;
+        }
         if (y < 0 || y > height - size) {
             speedY = -speedY;
+        }
+        if(y > height){
+            y = height - size;
+        }
+        if(y < 0){
+            y = 0;
         }
     }
 

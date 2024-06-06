@@ -20,4 +20,15 @@ public class FireParticle extends Particle {
     public void draw(Graphics g) {
         g.drawImage(texture, (int)x, (int)y, size, size, null);
     }
+
+    @Override
+    public void checkBoundaryCollision(int width, int height) {
+        super.checkBoundaryCollision(width, height);
+        if(x > width-size){
+            x = width - size;
+        }
+        if(y > height-size){
+            y = height - size;
+        }
+    }
 }

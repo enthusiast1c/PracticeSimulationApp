@@ -46,7 +46,7 @@ public class ControlPanel extends JPanel {
         speedSlider.setBackground(Color.DARK_GRAY);
         sizeSlider.setBackground(Color.DARK_GRAY);
         //Создание нижней подпанели
-        JPanel bottomPanel = new JPanel(new GridLayout(1, 5));
+        JPanel bottomPanel = new JPanel(new GridLayout(1, 6));
         JLabel amountLabel = new JLabel("Amount of particles:",SwingConstants.CENTER);
         amountLabel.setFont(new Font("Consolas", Font.BOLD, 18));
         amountLabel.setForeground(Color.ORANGE);
@@ -59,12 +59,14 @@ public class ControlPanel extends JPanel {
         JButton addPowderParticleButton = new JButton("Create Powder Particles"); // Создание кнопки добавления частиц порошка
         // Кнопка для добавления световых частиц
         JButton addLightParticleButton = new JButton("Create Light Particles"); // Создание кнопки добавления световых частиц
+        JButton addWaterParticleButton = new JButton("Kill Fire");
         // Установление цвета кнопки
         addAirParticleButton.setBackground(Color.ORANGE);
         addPowderParticleButton.setBackground(Color.ORANGE);
         addLightParticleButton.setBackground(Color.ORANGE);
 
         //Добавление кнопок в нижнюю подпанель
+        bottomPanel.add(addWaterParticleButton);
         bottomPanel.add(amountLabel);
         bottomPanel.add(amountParticleField);
         bottomPanel.add(addAirParticleButton);
@@ -118,7 +120,22 @@ public class ControlPanel extends JPanel {
             int amount = Integer.parseInt(amountParticleField.getText());
             addParticles(amount,LightParticle.class);
         });
+        addWaterParticleButton.addActionListener(e -> {
+            // Добавляем частицы с указанным классом
+            for (int i = 0; i < 20; i++) {
+                Particle particle;
+                int size = 30;
+                int speedX = randomSpeed();
+                int speedY = 3;
+                int x = randomX();
+                int y = 2;
 
+                particle = new WaterParticle(x, y, size, speedX, speedY);
+
+                // Добавление частицы на игровую панель
+                gamePanel.addParticle(particle);
+            }
+        });
 
         startAutoSimButton.addActionListener(e -> {
             int duration = Integer.parseInt(autoSimDurationField.getText());
@@ -162,6 +179,7 @@ public class ControlPanel extends JPanel {
 
     // Метод для добавления частиц на игровую панель
     private void addParticles(int amount, Class<? extends Particle> particleClass) {
+        gamePanel.setSize(sizeSlider.getValue());
         // Добавляем частицы с указанным классом
         for (int i = 0; i < amount; i++) {
             Particle particle;

@@ -12,9 +12,10 @@ public class GamePanel extends JPanel implements ActionListener {
     private final Random random = new Random(); // Генератор случайных чисел
     private final int initialSpeed;
     private final Image texture;
-
+    private int size;
     // Конструктор класса
     public GamePanel(int size, int speed) {
+        this.size = size;
         this.initialSpeed = speed;
         this.particles = new ArrayList<>(); // Создание списка частиц
         // Таймер для обновления анимации
@@ -76,10 +77,29 @@ public class GamePanel extends JPanel implements ActionListener {
                     toAdd.add(new FireParticle(powderParticle.getX(), powderParticle.getY(), 110, randomSpeed()+5, randomSpeed()+5));
                 }
             }
+
+            if (particle instanceof WaterParticle) {
+                ArrayList<Particle> tempToRemove = ((WaterParticle) particle).removeParticles(particles);
+                for (Particle p : tempToRemove) {
+                    for (int i = 0; i < 5; i++){
+                        toAdd.add(new AirParticle(p.getX(), p.getY(), this.size, randomSpeed(), randomSpeed()));
+                        toAdd.add(new LightParticle(p.getX(), p.getY(), this.size, randomSpeed(), randomSpeed()));
+                        toAdd.add(new LightParticle(p.getX(), p.getY(), this.size, randomSpeed(), randomSpeed()));
+                    }
+                }
+                if (particle.getY() >= 600){
+                    toRemove.add(particle);
+                }
+                toRemove.addAll(tempToRemove);
+            }
         }
 
         particles.removeAll(toRemove);
         particles.addAll(toAdd);
         repaint();
+    }
+
+    public void setSize (int size) {
+        this.size = size;
     }
 }

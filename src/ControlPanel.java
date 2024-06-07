@@ -1,5 +1,6 @@
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,19 +46,27 @@ public class ControlPanel extends JPanel {
         speedSlider.setBackground(Color.DARK_GRAY);
         sizeSlider.setBackground(Color.DARK_GRAY);
         //Создание нижней подпанели
-        JPanel bottomPanel = new JPanel(new GridLayout(1, 3));
+        JPanel bottomPanel = new JPanel(new GridLayout(1, 5));
+        JLabel amountLabel = new JLabel("Amount of particles:",SwingConstants.CENTER);
+        amountLabel.setFont(new Font("Consolas", Font.BOLD, 14));
+        amountLabel.setForeground(Color.ORANGE);
+        JTextField amountParticleField = new JTextField("15");
+        amountParticleField.setBackground(Color.LIGHT_GRAY);
+        amountParticleField.setFont(new Font("Consolas", Font.BOLD, 14));
         // Кнопка для добавления воздушных частиц
-        JButton addAirParticleButton = new JButton("Create 15 Air Particles"); // Создание кнопки добавления воздушных частиц
+        JButton addAirParticleButton = new JButton("Create Air Particles"); // Создание кнопки добавления воздушных частиц
         // Кнопка для добавления частиц порошка
-        JButton addPowderParticleButton = new JButton("Create 15 Powder Particles"); // Создание кнопки добавления частиц порошка
+        JButton addPowderParticleButton = new JButton("Create Powder Particles"); // Создание кнопки добавления частиц порошка
         // Кнопка для добавления световых частиц
-        JButton addLightParticleButton = new JButton("Create 15 Light Particles"); // Создание кнопки добавления световых частиц
+        JButton addLightParticleButton = new JButton("Create Light Particles"); // Создание кнопки добавления световых частиц
         // Установление цвета кнопки
         addAirParticleButton.setBackground(Color.ORANGE);
         addPowderParticleButton.setBackground(Color.ORANGE);
         addLightParticleButton.setBackground(Color.ORANGE);
 
         //Добавление кнопок в нижнюю подпанель
+        bottomPanel.add(amountLabel);
+        bottomPanel.add(amountParticleField);
         bottomPanel.add(addAirParticleButton);
         bottomPanel.add(addPowderParticleButton);
         bottomPanel.add(addLightParticleButton);
@@ -97,9 +106,18 @@ public class ControlPanel extends JPanel {
         add(bottomPanel);
 
         // Установка действий на кнопки добавления частиц
-        addAirParticleButton.addActionListener(e -> addParticles(AirParticle.class));
-        addPowderParticleButton.addActionListener(e -> addParticles(PowderParticle.class));
-        addLightParticleButton.addActionListener(e -> addParticles(LightParticle.class));
+        addAirParticleButton.addActionListener(e -> {
+            int amount = Integer.parseInt(amountParticleField.getText());
+            addParticles(amount,AirParticle.class);
+        });
+        addPowderParticleButton.addActionListener(e -> {
+            int amount = Integer.parseInt(amountParticleField.getText());
+            addParticles(amount,PowderParticle.class);
+        });
+        addLightParticleButton.addActionListener(e -> {
+            int amount = Integer.parseInt(amountParticleField.getText());
+            addParticles(amount,LightParticle.class);
+        });
 
 
         startAutoSimButton.addActionListener(e -> {
@@ -121,13 +139,20 @@ public class ControlPanel extends JPanel {
         resumeAutoSimButton.addActionListener(e -> resumeAutoSim());
 
         // Установка шрифта для кнопок
+        Border border = new LineBorder(Color.DARK_GRAY, 2);
         Font buttonFont = new Font("Consolas", Font.BOLD, 14);
         addAirParticleButton.setFont(buttonFont);
+        addAirParticleButton.setBorder(border);
         addPowderParticleButton.setFont(buttonFont);
+        addPowderParticleButton.setBorder(border);
         addLightParticleButton.setFont(buttonFont);
+        addLightParticleButton.setBorder(border);
         startAutoSimButton.setFont(buttonFont);
+        startAutoSimButton.setBorder(border);
         stopAutoSimButton.setFont(buttonFont);
+        stopAutoSimButton.setBorder(border);
         resumeAutoSimButton.setFont(buttonFont);
+        resumeAutoSimButton.setBorder(border);
     }
     public void resetAutoSimButtons() {
         startAutoSimButton.setVisible(true);
@@ -136,9 +161,9 @@ public class ControlPanel extends JPanel {
     }
 
     // Метод для добавления частиц на игровую панель
-    private void addParticles(Class<? extends Particle> particleClass) {
-        // Добавляем 10 частиц с указанным классом
-        for (int i = 0; i < 15; i++) {
+    private void addParticles(int amount, Class<? extends Particle> particleClass) {
+        // Добавляем частицы с указанным классом
+        for (int i = 0; i < amount; i++) {
             Particle particle;
             int size = sizeSlider.getValue();
             int speedX = randomSpeed();

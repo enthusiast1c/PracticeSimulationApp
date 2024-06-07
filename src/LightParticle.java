@@ -11,12 +11,14 @@ public class LightParticle extends Particle {
     private double angle;
     private final double angularSpeed;
     private final Image texture;
+    private final double attractionSpeed;
 
     public LightParticle(int x, int y, int size, int speedX, int speedY) {
         super(x, y, size, speedX, speedY);
         this.texture = new ImageIcon(Objects.requireNonNull(getClass().getResource("textures/light(texture).png"))).getImage();
         this.angle = Math.random() * 2 * Math.PI;
         this.angularSpeed = 0.05; // скорость вращения
+        this.attractionSpeed = 0.05; // Устанавливаем скорость притяжения
     }
 
     @Override
@@ -25,9 +27,15 @@ public class LightParticle extends Particle {
             findAndAttachToPowderParticle(particles);
         }
         if (attachedPowderParticle != null) {
-            angle += angularSpeed;
-            x = attachedPowderParticle.getX() + (int) (Math.cos(angle) * 65); // 65 - радиус окружности
-            y = attachedPowderParticle.getY() + (int) (Math.sin(angle) * 65);
+            // Плавное перемещение к частице пороха
+            angle += angularSpeed; // Увеличиваем угол
+            double targetX = attachedPowderParticle.getX() + Math.cos(angle) * 100;
+            double targetY = attachedPowderParticle.getY() + Math.sin(angle) * 100;
+
+            x += (int) ((targetX - x) * attractionSpeed) + attachedPowderParticle.speedX;
+            y += (int) ((targetY - y) * attractionSpeed) + attachedPowderParticle.speedY;
+
+
         } else {
             super.move(particles);
         }

@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,7 +48,10 @@ public class ParticleSimulation extends JFrame {
         }
         sizeSlider.setLabelTable(sizeLabels);
         JButton startButton = new JButton("Start");
+        startButton.setFont(new Font("Consolas", Font.BOLD, 20));
+        startButton.setBorder(new LineBorder(Color.DARK_GRAY, 10));
         startButton.setBackground(Color.ORANGE);
+
 
         JLabel speedLabel = new JLabel("Particle Speed:", JLabel.CENTER);
         speedLabel.setFont(new Font("Consolas", Font.BOLD, 17));
@@ -123,6 +128,8 @@ public class ParticleSimulation extends JFrame {
 
         // Add restart button
         JButton restartButton = new JButton("Restart");
+        restartButton.setFont(new Font("Consolas", Font.BOLD, 20));
+        restartButton.setBorder(new LineBorder(Color.DARK_GRAY, 10));
         restartButton.setBackground(Color.ORANGE);
         restartButton.addActionListener(e -> {
             simulationFrame.dispose();

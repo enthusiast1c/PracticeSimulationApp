@@ -10,6 +10,8 @@ public class AirParticle extends Particle {
     private double angle; // Угол вращения
     private final double angularSpeed; // Скорость
     private final Image texture;
+    private final double attractionSpeed; // Скорость притяжения к частице пороха
+
 
     // Конструктор для создания воздушной частицы
     public AirParticle(int x, int y, int size, int speedX, int speedY) {
@@ -17,6 +19,7 @@ public class AirParticle extends Particle {
         this.texture = new ImageIcon(Objects.requireNonNull(getClass().getResource("textures/air(texture).png"))).getImage();
         this.angle = Math.random() * 2 * Math.PI; // Устанавливаем случайный угол
         this.angularSpeed = 0.05; // Устанавливаем скорость вращения
+        this.attractionSpeed = 0.05; // Устанавливаем скорость притяжения
     }
 
     // Метод для перемещения воздушной частицы
@@ -26,13 +29,20 @@ public class AirParticle extends Particle {
             findAndAttachToPowderParticle(particles); // Ищем и привязываемся к частице пороха
         }
         if (attachedPowderParticle != null) {
+            // Плавное перемещение к частице пороха
             angle += angularSpeed; // Увеличиваем угол
-            x = attachedPowderParticle.getX() + (int) (Math.cos(angle) * 40); // Перемещаем по x
-            y = attachedPowderParticle.getY() + (int) (Math.sin(angle) * 40); // Перемещаем по y
+            double targetX = attachedPowderParticle.getX() + Math.cos(angle) * 65;
+            double targetY = attachedPowderParticle.getY() + Math.sin(angle) * 65;
+
+            x += (int) ((targetX - x) * attractionSpeed) + attachedPowderParticle.speedX;
+            y += (int) ((targetY - y) * attractionSpeed) + attachedPowderParticle.speedY;
+
+
         } else {
             super.move(particles); // Если нет привязанной частицы пороха, используем обычное перемещение
         }
     }
+
 
     // Метод для поиска и привязки к частице пороха
     private void findAndAttachToPowderParticle(ArrayList<Particle> particles) {

@@ -18,7 +18,7 @@ public class FireParticle extends Particle {
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(texture, (int)x, (int)y, size, size, null);
+        g.drawImage(texture, x, y, size, size, null);
     }
 
     @Override

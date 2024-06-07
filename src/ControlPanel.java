@@ -33,10 +33,10 @@ public class ControlPanel extends JPanel {
         JPanel topPanel = new JPanel(new GridLayout(2, 2));
         //Создание и добавление слайдеров в верхнюю подпанель
         JLabel speedLabel = new JLabel("Particle Speed:", JLabel.CENTER);
-        speedLabel.setFont(new Font("Consolas", Font.BOLD, 14));
+        speedLabel.setFont(new Font("Consolas", Font.BOLD, 16));
         speedLabel.setForeground(Color.ORANGE);
         JLabel sizeLabel = new JLabel("Particle Size:",JLabel.CENTER);
-        sizeLabel.setFont(new Font("Consolas", Font.BOLD, 14));
+        sizeLabel.setFont(new Font("Consolas", Font.BOLD, 16));
         sizeLabel.setForeground(Color.ORANGE);
         topPanel.add(speedLabel);
         topPanel.add(sizeLabel);
@@ -48,11 +48,11 @@ public class ControlPanel extends JPanel {
         //Создание нижней подпанели
         JPanel bottomPanel = new JPanel(new GridLayout(1, 5));
         JLabel amountLabel = new JLabel("Amount of particles:",SwingConstants.CENTER);
-        amountLabel.setFont(new Font("Consolas", Font.BOLD, 14));
+        amountLabel.setFont(new Font("Consolas", Font.BOLD, 18));
         amountLabel.setForeground(Color.ORANGE);
         JTextField amountParticleField = new JTextField("15");
         amountParticleField.setBackground(Color.LIGHT_GRAY);
-        amountParticleField.setFont(new Font("Consolas", Font.BOLD, 14));
+        amountParticleField.setFont(new Font("Consolas", Font.BOLD, 18));
         // Кнопка для добавления воздушных частиц
         JButton addAirParticleButton = new JButton("Create Air Particles"); // Создание кнопки добавления воздушных частиц
         // Кнопка для добавления частиц порошка
@@ -85,9 +85,9 @@ public class ControlPanel extends JPanel {
 
         JTextField autoSimDurationField = new JTextField("10");
         autoSimDurationField.setBackground(Color.LIGHT_GRAY);
-        autoSimDurationField.setFont(new Font("Consolas", Font.BOLD, 14));
+        autoSimDurationField.setFont(new Font("Consolas", Font.BOLD, 18));
         JLabel autoSimLabel = new JLabel("Auto Sim Duration (s):",SwingConstants.CENTER);
-        autoSimLabel.setFont(new Font("Consolas", Font.BOLD, 14));
+        autoSimLabel.setFont(new Font("Consolas", Font.BOLD, 18));
         autoSimLabel.setForeground(Color.ORANGE);
         //Добавление кнопок в авто подпанель
         autoPanel.add(autoSimLabel);
@@ -139,8 +139,8 @@ public class ControlPanel extends JPanel {
         resumeAutoSimButton.addActionListener(e -> resumeAutoSim());
 
         // Установка шрифта для кнопок
-        Border border = new LineBorder(Color.DARK_GRAY, 2);
-        Font buttonFont = new Font("Consolas", Font.BOLD, 14);
+        Border border = new LineBorder(Color.DARK_GRAY, 3);
+        Font buttonFont = new Font("Consolas", Font.BOLD, 16);
         addAirParticleButton.setFont(buttonFont);
         addAirParticleButton.setBorder(border);
         addPowderParticleButton.setFont(buttonFont);

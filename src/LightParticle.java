@@ -1,7 +1,5 @@
-import java.awt.*;
 import java.util.ArrayList;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.util.Objects;
 import javax.swing.ImageIcon;
 
@@ -10,7 +8,6 @@ public class LightParticle extends Particle {
     private PowderParticle attachedPowderParticle;
     private double angle;
     private final double angularSpeed;
-    private final Image texture;
     private final double attractionSpeed;
 
     public LightParticle(int x, int y, int size, int speedX, int speedY) {

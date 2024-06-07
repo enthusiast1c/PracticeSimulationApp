@@ -1,10 +1,8 @@
 import java.awt.*;
 import java.util.ArrayList;
-import java.awt.Image;
 import java.util.Objects;
 import javax.swing.ImageIcon;
 public class FireParticle extends Particle {
-    private final Image texture;
 
     public FireParticle(int x, int y, int size, int speedX, int speedY) {
         super(x, y, size, speedX, speedY);

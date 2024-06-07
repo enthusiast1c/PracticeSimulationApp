@@ -1,13 +1,11 @@
 import java.util.ArrayList;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.util.Objects;
 import javax.swing.ImageIcon;
 
 public class PowderParticle extends Particle {
     private final ArrayList<AirParticle> attachedAirParticles;
     private final ArrayList<LightParticle> attachedLightParticles;
-    private final Image texture;
 
     public PowderParticle(int x, int y, int size, int speedX, int speedY) {
         super(x, y, size, speedX, speedY);

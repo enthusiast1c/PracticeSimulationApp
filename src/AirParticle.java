@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.util.Objects;
 import javax.swing.ImageIcon;
 
@@ -9,7 +8,6 @@ public class AirParticle extends Particle {
     private PowderParticle attachedPowderParticle; // Привязанная частица пороха
     private double angle; // Угол вращения
     private final double angularSpeed; // Скорость
-    private final Image texture;
     private final double attractionSpeed; // Скорость притяжения к частице пороха
 
 

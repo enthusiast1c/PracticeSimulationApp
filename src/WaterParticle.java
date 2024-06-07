@@ -9,7 +9,7 @@ public class WaterParticle extends Particle{
     double angle = 0.0;
     public WaterParticle(int x, int y, int size, int speedX,int speedY){
         super(x, y, size, speedX, speedY);
-        this.texture = new ImageIcon(Objects.requireNonNull(getClass().getResource("textures/air(texture).png"))).getImage();
+        this.texture = new ImageIcon(Objects.requireNonNull(getClass().getResource("textures/water(texture).png"))).getImage();
     }
 
     @Override

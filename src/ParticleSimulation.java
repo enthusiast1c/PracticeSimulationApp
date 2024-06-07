@@ -33,7 +33,7 @@ public class ParticleSimulation extends JFrame {
             speedLabels.put(i, label);
         }
         speedSlider.setLabelTable(speedLabels);
-        sizeSlider = new JSlider(10, 50, 20);
+        sizeSlider = new JSlider(10, 50, 25);
         sizeSlider.setBackground(Color.DARK_GRAY);
         sizeSlider.setMajorTickSpacing(5);
         sizeSlider.setMinorTickSpacing(10);
@@ -49,7 +49,6 @@ public class ParticleSimulation extends JFrame {
         sizeSlider.setLabelTable(sizeLabels);
         JButton startButton = new JButton("Start");
         startButton.setFont(new Font("Consolas", Font.BOLD, 20));
-        startButton.setBorder(new LineBorder(Color.DARK_GRAY, 10));
         startButton.setBackground(Color.ORANGE);
 
 
@@ -87,6 +86,7 @@ public class ParticleSimulation extends JFrame {
 
                 if (confirmed == JOptionPane.YES_OPTION) {
                     dispose();
+                    System.exit(0);
                 }
             }
         });
@@ -129,7 +129,6 @@ public class ParticleSimulation extends JFrame {
         // Add restart button
         JButton restartButton = new JButton("Restart");
         restartButton.setFont(new Font("Consolas", Font.BOLD, 20));
-        restartButton.setBorder(new LineBorder(Color.DARK_GRAY, 10));
         restartButton.setBackground(Color.ORANGE);
         restartButton.addActionListener(e -> {
             simulationFrame.dispose();

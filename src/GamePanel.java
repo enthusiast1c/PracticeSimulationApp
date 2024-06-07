@@ -8,14 +8,13 @@ import java.util.Random;
 
 // Класс для панели
 public class GamePanel extends JPanel implements ActionListener {
-    private final ArrayList<Particle> particles; // Список частиц
+    final ArrayList<Particle> particles; // Список частиц
     private final Random random = new Random(); // Генератор случайных чисел
     private final int initialSpeed;
     private final Image texture;
     private int size;
     // Конструктор класса
     public GamePanel(int size, int speed) {
-        this.size = size;
         this.initialSpeed = speed;
         this.particles = new ArrayList<>(); // Создание списка частиц
         // Таймер для обновления анимации
@@ -74,7 +73,7 @@ public class GamePanel extends JPanel implements ActionListener {
                     toRemove.add(particle);
                     toRemove.addAll(powderParticle.getAttachedAirParticles());
                     toRemove.addAll(powderParticle.getAttachedLightParticles());
-                    toAdd.add(new FireParticle(powderParticle.getX(), powderParticle.getY(), 110, randomSpeed()+5, randomSpeed()+5));
+                    toAdd.add(new FireParticle(powderParticle.getX(), powderParticle.getY(), 110, randomSpeed() + 6, randomSpeed() + 6));
                 }
             }
 

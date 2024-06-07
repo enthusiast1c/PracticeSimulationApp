@@ -41,12 +41,12 @@ public class ControlPanel extends JPanel {
         topPanel.add(speedLabel);
         topPanel.add(sizeLabel);
         speedSlider = (JSlider) topPanel.add(new JSlider(2, 10, 5));
-        sizeSlider = (JSlider) topPanel.add(new JSlider(10, 50, 20));
+        sizeSlider = (JSlider) topPanel.add(new JSlider(10, 50, 25));
         topPanel.setBackground(Color.DARK_GRAY);
         speedSlider.setBackground(Color.DARK_GRAY);
         sizeSlider.setBackground(Color.DARK_GRAY);
         //Создание нижней подпанели
-        JPanel bottomPanel = new JPanel(new GridLayout(1, 6));
+        JPanel bottomPanel = new JPanel(new GridLayout(1, 5));
         JLabel amountLabel = new JLabel("Amount of particles:",SwingConstants.CENTER);
         amountLabel.setFont(new Font("Consolas", Font.BOLD, 18));
         amountLabel.setForeground(Color.ORANGE);
@@ -59,14 +59,12 @@ public class ControlPanel extends JPanel {
         JButton addPowderParticleButton = new JButton("Create Powder Particles"); // Создание кнопки добавления частиц порошка
         // Кнопка для добавления световых частиц
         JButton addLightParticleButton = new JButton("Create Light Particles"); // Создание кнопки добавления световых частиц
-        JButton addWaterParticleButton = new JButton("Kill Fire");
         // Установление цвета кнопки
         addAirParticleButton.setBackground(Color.ORANGE);
         addPowderParticleButton.setBackground(Color.ORANGE);
         addLightParticleButton.setBackground(Color.ORANGE);
 
         //Добавление кнопок в нижнюю подпанель
-        bottomPanel.add(addWaterParticleButton);
         bottomPanel.add(amountLabel);
         bottomPanel.add(amountParticleField);
         bottomPanel.add(addAirParticleButton);
@@ -74,7 +72,7 @@ public class ControlPanel extends JPanel {
         bottomPanel.add(addLightParticleButton);
         bottomPanel.setBackground(Color.DARK_GRAY);
         //Создание авто подпанели
-        JPanel autoPanel = new JPanel(new GridLayout(1, 2));
+        JPanel autoPanel = new JPanel(new GridLayout(1, 3));
         startAutoSimButton = new JButton("Start Auto Simulation");
         startAutoSimButton.setForeground(Color.DARK_GRAY);
         startAutoSimButton.setBackground(Color.ORANGE);
@@ -91,12 +89,15 @@ public class ControlPanel extends JPanel {
         JLabel autoSimLabel = new JLabel("Auto Sim Duration (s):",SwingConstants.CENTER);
         autoSimLabel.setFont(new Font("Consolas", Font.BOLD, 18));
         autoSimLabel.setForeground(Color.ORANGE);
+        JButton addWaterParticleButton = new JButton("Put out the fire");
+        addWaterParticleButton.setBackground(Color.ORANGE);
         //Добавление кнопок в авто подпанель
         autoPanel.add(autoSimLabel);
         autoPanel.add(autoSimDurationField);
         autoPanel.add(startAutoSimButton);
         autoPanel.add(stopAutoSimButton);
         autoPanel.add(resumeAutoSimButton);
+        autoPanel.add(addWaterParticleButton);
         stopAutoSimButton.setVisible(false);
         resumeAutoSimButton.setVisible(false);
         autoPanel.setBackground(Color.DARK_GRAY);
@@ -109,16 +110,34 @@ public class ControlPanel extends JPanel {
 
         // Установка действий на кнопки добавления частиц
         addAirParticleButton.addActionListener(e -> {
-            int amount = Integer.parseInt(amountParticleField.getText());
-            addParticles(amount,AirParticle.class);
+            try {
+                int amount = Integer.parseInt(amountParticleField.getText());
+                if (amount <= 1000 && amount > 0 ) {
+                    addParticles(amount,AirParticle.class);
+                } else JOptionPane.showMessageDialog(gamePanel, "The number of Air Particles entered is incorrect. Please try again!", "Error!", JOptionPane.ERROR_MESSAGE);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(gamePanel, "Invalid input data. Please try again!", "Error!", JOptionPane.ERROR_MESSAGE);
+            }
         });
         addPowderParticleButton.addActionListener(e -> {
-            int amount = Integer.parseInt(amountParticleField.getText());
-            addParticles(amount,PowderParticle.class);
+            try {
+                int amount = Integer.parseInt(amountParticleField.getText());
+                if (amount <= 100 && amount > 0 ) {
+                    addParticles(amount,PowderParticle.class);
+                } else JOptionPane.showMessageDialog(gamePanel, "The number of Powder Particles entered is incorrect. Please try again!", "Error!", JOptionPane.ERROR_MESSAGE);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(gamePanel, "Invalid input data. Please try again!", "Error!", JOptionPane.ERROR_MESSAGE);
+            }
         });
         addLightParticleButton.addActionListener(e -> {
-            int amount = Integer.parseInt(amountParticleField.getText());
-            addParticles(amount,LightParticle.class);
+            try {
+                int amount = Integer.parseInt(amountParticleField.getText());
+                if (amount <= 2000 && amount > 0 ) {
+                    addParticles(amount,LightParticle.class);
+                } else JOptionPane.showMessageDialog(gamePanel, "The number of light particles entered is incorrect. Please try again!", "Error!", JOptionPane.ERROR_MESSAGE);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(gamePanel, "Invalid input data. Please try again!", "Error!", JOptionPane.ERROR_MESSAGE);
+            }
         });
         addWaterParticleButton.addActionListener(e -> {
             // Добавляем частицы с указанным классом
@@ -138,10 +157,21 @@ public class ControlPanel extends JPanel {
         });
 
         startAutoSimButton.addActionListener(e -> {
-            int duration = Integer.parseInt(autoSimDurationField.getText());
-            startAutoSim(duration);
-            startAutoSimButton.setVisible(false);
-            stopAutoSimButton.setVisible(true);
+            try {
+                int limitParticles = 3500;
+                if (gamePanel.particles.size() < limitParticles) {
+                    int duration = Integer.parseInt(autoSimDurationField.getText());
+                    if (duration <= 60 && duration > 1) {
+                        startAutoSim(duration);
+                        startAutoSimButton.setVisible(false);
+                        stopAutoSimButton.setVisible(true);
+                    } else
+                        JOptionPane.showMessageDialog(gamePanel, "The duration of Auto Sim entered is incorrect. Please try again!", "Error!", JOptionPane.ERROR_MESSAGE);
+                }else
+                    JOptionPane.showMessageDialog(gamePanel, "The maximum number of particles on the playing field has been exceeded!", "Error!", JOptionPane.ERROR_MESSAGE);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(gamePanel, "Invalid input data. Please try again!", "Error!", JOptionPane.ERROR_MESSAGE);
+            }
         });
         stopAutoSimButton.addActionListener(e -> {
             stopAutoSimButton.setVisible(false);
@@ -158,6 +188,8 @@ public class ControlPanel extends JPanel {
         // Установка шрифта для кнопок
         Border border = new LineBorder(Color.DARK_GRAY, 3);
         Font buttonFont = new Font("Consolas", Font.BOLD, 16);
+        addWaterParticleButton.setFont(buttonFont);
+        addWaterParticleButton.setBorder(border);
         addAirParticleButton.setFont(buttonFont);
         addAirParticleButton.setBorder(border);
         addPowderParticleButton.setFont(buttonFont);
@@ -180,26 +212,32 @@ public class ControlPanel extends JPanel {
     // Метод для добавления частиц на игровую панель
     private void addParticles(int amount, Class<? extends Particle> particleClass) {
         gamePanel.setSize(sizeSlider.getValue());
-        // Добавляем частицы с указанным классом
-        for (int i = 0; i < amount; i++) {
-            Particle particle;
-            int size = sizeSlider.getValue();
-            int speedX = randomSpeed();
-            int speedY = randomSpeed();
-            int x = randomX();
-            int y = randomY();
+        try {
+            int limitParticles = 3500;
+            if (gamePanel.particles.size() < limitParticles){
+                // Добавляем частицы с указанным классом
+                for (int i = 0; i < amount; i++) {
+                    Particle particle;
+                    int size = sizeSlider.getValue();
+                    int speedX = randomSpeed();
+                    int speedY = randomSpeed();
+                    int x = randomX();
+                    int y = randomY();
 
-            // Создание частицы в зависимости от указанного класса
-            if (particleClass == AirParticle.class) {
-                particle = new AirParticle(x, y, size, speedX, speedY);
-            } else if (particleClass == PowderParticle.class) {
-                particle = new PowderParticle(x, y, size, speedX, speedY);
-            } else {
-                particle = new LightParticle(x, y, size, speedX, speedY);
-            }
-
-            // Добавление частицы на игровую панель
-            gamePanel.addParticle(particle);
+                    // Создание частицы в зависимости от указанного класса
+                    if (particleClass == AirParticle.class) {
+                        particle = new AirParticle(x, y, size, speedX, speedY);
+                    } else if (particleClass == PowderParticle.class) {
+                        particle = new PowderParticle(x, y, size, speedX, speedY);
+                    } else {
+                        particle = new LightParticle(x, y, size, speedX, speedY);
+                    }
+                    // Добавление частицы на игровую панель
+                    gamePanel.addParticle(particle);
+                }
+            }else JOptionPane.showMessageDialog(gamePanel, "The maximum number of particles on the playing field has been exceeded!", "Error!", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -248,19 +286,25 @@ public class ControlPanel extends JPanel {
                 resetAutoSim();
                 return;
             }
-            for (int i = 0; i < 5; i++) {
-                gamePanel.addParticle(new AirParticle(randomX(), randomY(), sizeSlider.getValue(), randomSpeed(), randomSpeed()));
+            try {
+                int limitParticles = 3500;
+                if (gamePanel.particles.size() < limitParticles) {
+                    for (int i = 0; i < 5; i++) {
+                        gamePanel.addParticle(new AirParticle(randomX(), randomY(), sizeSlider.getValue(), randomSpeed(), randomSpeed()));
+                    }
+                    for (int i = 0; i < 10; i++) {
+                        gamePanel.addParticle(new LightParticle(randomX(), randomY(), sizeSlider.getValue(), randomSpeed(), randomSpeed()));
+                    }
+                    if (elapsedAutoSimTime % 5 == 0) {
+                        for (int i = 0; i < 1; i++) {
+                            gamePanel.addParticle(new PowderParticle(randomX(), randomY(), sizeSlider.getValue(), randomSpeed(), randomSpeed()));
+                        }
+                    }
+                    elapsedAutoSimTime += 2;
+                }else JOptionPane.showMessageDialog(gamePanel, "The maximum number of particles on the playing field has been exceeded!", "Error!", JOptionPane.ERROR_MESSAGE);
+            }catch (Exception ex) {
+                throw new RuntimeException(ex);
             }
-            for (int i = 0; i < 10; i++) {
-                gamePanel.addParticle(new LightParticle(randomX(), randomY(), sizeSlider.getValue(), randomSpeed(), randomSpeed()));
-            }
-            if(elapsedAutoSimTime % 5 == 0) {
-                for (int i = 0; i < 1; i++) {
-                    gamePanel.addParticle(new PowderParticle(randomX(), randomY(), sizeSlider.getValue(), randomSpeed(), randomSpeed()));
-                }
-            }
-
-            elapsedAutoSimTime += 2;
         }
     }
 }

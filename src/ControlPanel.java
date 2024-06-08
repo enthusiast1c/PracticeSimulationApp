@@ -16,7 +16,7 @@ public class ControlPanel extends JPanel {
     private int autoSimDuration; // Продолжительность авто симуляции
     private int elapsedAutoSimTime; // Прошедшее время авто симуляции
     private final JButton startAutoSimButton; // Кнопка для запуска авто симуляции
-    private final JButton stopAutoSimButton; // Кнопка для остановки авто симуляции
+    private final JButton pauseAutoSimButton; // Кнопка для остановки авто симуляции
     private final JButton resumeAutoSimButton; // Кнопка для возобновления авто симуляции
     private final Random random = new Random(); // Генератор случайных чисел
 
@@ -54,7 +54,7 @@ public class ControlPanel extends JPanel {
         amountParticleField.setBackground(Color.LIGHT_GRAY);
         // Кнопка для добавления воздушных частиц
         JButton addAirParticleButton = new JButton("Create Air Particles"); // Создание кнопки добавления воздушных частиц
-        // Кнопка для добавления частиц порошка
+        // Кнопка для добавления частиц пороха
         JButton addPowderParticleButton = new JButton("Create Powder Particles"); // Создание кнопки добавления частиц пороха
         // Кнопка для добавления световых частиц
         JButton addLightParticleButton = new JButton("Create Light Particles"); // Создание кнопки добавления световых частиц
@@ -75,9 +75,9 @@ public class ControlPanel extends JPanel {
         startAutoSimButton = new JButton("Start Auto Simulation"); // Кнопка для запуска авто симуляции
         startAutoSimButton.setForeground(Color.DARK_GRAY);
         startAutoSimButton.setBackground(Color.ORANGE);
-        stopAutoSimButton = new JButton("Pause Auto Simulation"); // Кнопка для паузы авто симуляции
-        stopAutoSimButton.setForeground(Color.DARK_GRAY);
-        stopAutoSimButton.setBackground(Color.ORANGE);
+        pauseAutoSimButton = new JButton("Pause Auto Simulation"); // Кнопка для паузы авто симуляции
+        pauseAutoSimButton.setForeground(Color.DARK_GRAY);
+        pauseAutoSimButton.setBackground(Color.ORANGE);
         resumeAutoSimButton = new JButton("Resume Auto Simulation"); // Кнопка для возобновления авто симуляции
         resumeAutoSimButton.setForeground(Color.DARK_GRAY);
         resumeAutoSimButton.setBackground(Color.ORANGE);
@@ -91,12 +91,12 @@ public class ControlPanel extends JPanel {
         autoPanel.add(autoSimLabel);
         autoPanel.add(autoSimDurationField);
         autoPanel.add(startAutoSimButton);
-        autoPanel.add(stopAutoSimButton);
+        autoPanel.add(pauseAutoSimButton);
         autoPanel.add(resumeAutoSimButton);
         autoPanel.add(addWaterParticleButton);
         autoPanel.setBackground(Color.DARK_GRAY);
         // Установка видимости кнопок авто симуляции
-        stopAutoSimButton.setVisible(false);
+        pauseAutoSimButton.setVisible(false);
         resumeAutoSimButton.setVisible(false);
 
         // Добавление верхней, нижней и панели авто симуляции на панель управления
@@ -123,7 +123,7 @@ public class ControlPanel extends JPanel {
             try {
                 int amount = Integer.parseInt(amountParticleField.getText()); // Получение введенного количества частиц
                 if (amount <= 100 && amount > 0) { // Проверка на допустимый ввод
-                    addParticles(amount, PowderParticle.class); // Добавление частиц порошка
+                    addParticles(amount, PowderParticle.class); // Добавление частиц пороха
                 } else {
                     JOptionPane.showMessageDialog(gamePanel, "The number of Powder Particles entered is incorrect. Please try again!", "Error!", JOptionPane.ERROR_MESSAGE);
                 }
@@ -168,7 +168,7 @@ public class ControlPanel extends JPanel {
                     if (duration <= 60 && duration > 1) { // Проверка на допустимы ввод
                         startAutoSim(duration);
                         startAutoSimButton.setVisible(false);
-                        stopAutoSimButton.setVisible(true);
+                        pauseAutoSimButton.setVisible(true);
                     } else
                         JOptionPane.showMessageDialog(gamePanel, "The duration of Auto Sim entered is incorrect. Please try again!", "Error!", JOptionPane.ERROR_MESSAGE);
                 } else
@@ -178,17 +178,17 @@ public class ControlPanel extends JPanel {
             }
         });
         // Добавление слушателя событий для кнопки остановки авто симуляции
-        stopAutoSimButton.addActionListener(e -> {
-            stopAutoSimButton.setVisible(false);
+        pauseAutoSimButton.addActionListener(e -> {
+            pauseAutoSimButton.setVisible(false);
             resumeAutoSimButton.setVisible(true);
         });
         // Добавление слушателя событий для кнопки возобновления авто симуляции
         resumeAutoSimButton.addActionListener(e -> {
-            stopAutoSimButton.setVisible(true);
+            pauseAutoSimButton.setVisible(true);
             resumeAutoSimButton.setVisible(false);
         });
         // Добавление слушателя событий для кнопки остановки авто симуляции
-        stopAutoSimButton.addActionListener(e -> stopAutoSim());
+        pauseAutoSimButton.addActionListener(e -> pauseAutoSim());
         // Добавление слушателя событий для кнопки возобновления авто симуляции
         resumeAutoSimButton.addActionListener(e -> resumeAutoSim());
 
@@ -205,7 +205,7 @@ public class ControlPanel extends JPanel {
         autoSimDurationField.setFont(buttonFont);
         autoSimLabel.setFont(buttonFont);
         startAutoSimButton.setFont(buttonFont);
-        stopAutoSimButton.setFont(buttonFont);
+        pauseAutoSimButton.setFont(buttonFont);
         resumeAutoSimButton.setFont(buttonFont);
 
         // Установка обводки у кнопок
@@ -215,14 +215,14 @@ public class ControlPanel extends JPanel {
         addPowderParticleButton.setBorder(border);
         addLightParticleButton.setBorder(border);
         startAutoSimButton.setBorder(border);
-        stopAutoSimButton.setBorder(border);
+        pauseAutoSimButton.setBorder(border);
         resumeAutoSimButton.setBorder(border);
 
     }
     // Метод для сброса состояния кнопок авто симуляци
     public void resetAutoSimButtons() {
         startAutoSimButton.setVisible(true);
-        stopAutoSimButton.setVisible(false);
+        pauseAutoSimButton.setVisible(false);
         resumeAutoSimButton.setVisible(false);
     }
 
@@ -275,7 +275,7 @@ public class ControlPanel extends JPanel {
         this.autoSimTimer.start();
     }
     // Метод для остановки авто симуляции
-    public void stopAutoSim() {
+    public void pauseAutoSim() {
         this.autoSimRunning = false;
         this.autoSimTimer.stop();
     }

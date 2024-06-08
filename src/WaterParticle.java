@@ -1,44 +1,44 @@
-import java.awt.*;
 import java.util.ArrayList;
 import java.awt.Graphics;
 import java.util.Objects;
 import javax.swing.ImageIcon;
 
-public class WaterParticle extends Particle{
-    double angle = 0.0;
-    public WaterParticle(int x, int y, int size, int speedX,int speedY){
+// Класс, представляющий водяную частицу
+public class WaterParticle extends Particle {
+    // Конструктор для создания водяной частицы
+    public WaterParticle(int x, int y, int size, int speedX, int speedY) {
         super(x, y, size, speedX, speedY);
+        // Загрузка текстуры водяной частицы
         this.texture = new ImageIcon(Objects.requireNonNull(getClass().getResource("textures/water(texture).png"))).getImage();
     }
 
+    // Переопределенный метод для перемещения частицы
+    @Override
+    public void move(ArrayList<Particle> particles) {
+        super.move(particles); // Вызов метода перемещения родительского класса
+    }
+
+    // Переопределенный метод для отрисовки частицы
     @Override
     public void draw(Graphics g) {
+        // Отрисовка изображения текстуры частицы на графическом контексте
         g.drawImage(texture, x, y, size, size, null);
     }
 
-    public void move(){
-        angle += 90;
-        if (angle >= 360)
-            angle -= 360;
-        int moveX = (int) (Math.cos(angle) * 65);
-        if (speedY < 10)
-            speedY = 10;
-        x += moveX;
-        y += speedY;
-    }
-
+    // Метод для удаления частиц огня
     public ArrayList<Particle> removeParticles(ArrayList<Particle> particles) {
-        ArrayList<Particle> removeList = new ArrayList<>();
-        for (Particle p: particles){
-            if (p instanceof FireParticle) {
-                double distance = distanceTo(p);
-                int sizeOther = p.getSize();
-                double minimalDistance = (this.size + sizeOther) / 2.0;
-                if (distance <= minimalDistance){
-                    removeList.add(p);
+        ArrayList<Particle> removeList = new ArrayList<>(); // Список частиц для удаления
+        // Проходим по всем частицам и находим те, которые нужно удалить
+        for (Particle p : particles) {
+            if (p instanceof FireParticle) { // Если частица является огненной
+                double distance = distanceTo(p); // Расстояние до огненной частицы
+                int sizeOther = p.getSize(); // Размер огненной частицы
+                double minimalDistance = (this.size + sizeOther) / 2.0; // Минимальное расстояние для удаления
+                if (distance <= minimalDistance) { // Если расстояние меньше или равно минимальному
+                    removeList.add(p); // Добавляем огненную частицу в список для удаления
                 }
             }
         }
-        return removeList;
+        return removeList; // Возвращаем список частиц для удаления
     }
 }

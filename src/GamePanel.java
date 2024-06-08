@@ -6,17 +6,19 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
-// Класс для панели
+// Класс для панели игры
 public class GamePanel extends JPanel implements ActionListener {
     final ArrayList<Particle> particles; // Список частиц
     private final Random random = new Random(); // Генератор случайных чисел
-    private final int initialSpeed;
-    private final Image texture;
-    private int size;
+    private final int initialSpeed; // Начальная скорость частиц
+    private final Image texture; // Текстура фона
+    private int size; // Размер частиц
+
     // Конструктор класса
     public GamePanel(int size, int speed) {
-        this.initialSpeed = speed;
+        this.initialSpeed = speed; // Установка начальной скорости
         this.particles = new ArrayList<>(); // Создание списка частиц
+
         // Таймер для обновления анимации
         Timer timer = new Timer(16, this); // Инициализация таймера с интервалом 16 мс
 
@@ -27,7 +29,7 @@ public class GamePanel extends JPanel implements ActionListener {
             addParticle(new LightParticle(400, 300, size, randomSpeed(), randomSpeed()));
         }
 
-        timer.start(); // Запуск таймера для начала анимации
+        timer.start();
         this.texture = new ImageIcon(Objects.requireNonNull(getClass().getResource("textures/background.png"))).getImage();
     }
 
@@ -41,16 +43,21 @@ public class GamePanel extends JPanel implements ActionListener {
         particles.add(particle);
     }
 
+    // Метод для установки текущего размера из слайдера
+    public void setSize(int size) {
+        this.size = size;
+    }
+
     // Переопределение метода отрисовки компонента
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (texture != null) {
-            g.drawImage(texture, 0, 0, getWidth(), getHeight(), this);
+            g.drawImage(texture, 0, 0, getWidth(), getHeight(), this); // Отрисовка фона
         }
 
         g.setColor(Color.ORANGE);
-        g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
+        g.drawRect(0, 0, getWidth() - 1, getHeight() - 1); // Отрисовка оранжевой рамки вокруг панели
 
         // Отрисовка каждой частицы в списке
         for (Particle particle : particles) {
@@ -61,44 +68,40 @@ public class GamePanel extends JPanel implements ActionListener {
     // Обработчик действий таймера
     @Override
     public void actionPerformed(ActionEvent e) {
-        ArrayList<Particle> toRemove = new ArrayList<>();
-        ArrayList<Particle> toAdd = new ArrayList<>();
+        ArrayList<Particle> toRemove = new ArrayList<>(); // Список частиц для удаления
+        ArrayList<Particle> toAdd = new ArrayList<>(); // Список частиц для добавления
 
         for (Particle particle : particles) {
-            particle.move(particles);
-            particle.checkBoundaryCollision(getWidth(), getHeight());
+            particle.move(particles); // Перемещение частицы
+            particle.checkBoundaryCollision(getWidth(), getHeight()); // Проверка на столкновение с границами
 
             if (particle instanceof PowderParticle powderParticle) {
-                if (powderParticle.canTransformToFire()) {
-                    toRemove.add(particle);
-                    toRemove.addAll(powderParticle.getAttachedAirParticles());
-                    toRemove.addAll(powderParticle.getAttachedLightParticles());
-                    toAdd.add(new FireParticle(powderParticle.getX(), powderParticle.getY(), 110, randomSpeed() + 6, randomSpeed() + 6));
+                if (powderParticle.canTransformToFire()) { // Проверка на возможность трансформации в огонь
+                    toRemove.add(particle); // Удаление частицы пороха
+                    toRemove.addAll(powderParticle.getAttachedAirParticles()); // Удаление привязанных воздушных частиц
+                    toRemove.addAll(powderParticle.getAttachedLightParticles()); // Удаление привязанных световых частиц
+                    toAdd.add(new FireParticle(powderParticle.getX(), powderParticle.getY(), 110, randomSpeed() + 6, randomSpeed() + 6)); // Добавление огненной частицы
                 }
             }
 
             if (particle instanceof WaterParticle) {
-                ArrayList<Particle> tempToRemove = ((WaterParticle) particle).removeParticles(particles);
+                ArrayList<Particle> tempToRemove = ((WaterParticle) particle).removeParticles(particles); // Удаление огненных частиц при контакте с водой
                 for (Particle p : tempToRemove) {
-                    for (int i = 0; i < 5; i++){
-                        toAdd.add(new AirParticle(p.getX(), p.getY(), this.size, randomSpeed(), randomSpeed()));
-                        toAdd.add(new LightParticle(p.getX(), p.getY(), this.size, randomSpeed(), randomSpeed()));
-                        toAdd.add(new LightParticle(p.getX(), p.getY(), this.size, randomSpeed(), randomSpeed()));
+                    for (int i = 0; i < 5; i++) {
+                        toAdd.add(new AirParticle(p.getX(), p.getY(), this.size, randomSpeed(), randomSpeed())); // Добавление воздушных частиц на место удаленных
+                        toAdd.add(new LightParticle(p.getX(), p.getY(), this.size, randomSpeed(), randomSpeed())); // Добавление световых частиц на место удаленных
+                        toAdd.add(new LightParticle(p.getX(), p.getY(), this.size, randomSpeed(), randomSpeed())); // Дополнительные световые частицы
                     }
                 }
-                if (particle.getY() >= 600){
-                    toRemove.add(particle);
+                if (particle.getY() >= 600) {
+                    toRemove.add(particle); // Удаление водяной частицы, если она достигла дна панели
                 }
-                toRemove.addAll(tempToRemove);
+                toRemove.addAll(tempToRemove); // Удаление временных частиц
             }
         }
 
-        particles.removeAll(toRemove);
-        particles.addAll(toAdd);
-        repaint();
-    }
-
-    public void setSize (int size) {
-        this.size = size;
+        particles.removeAll(toRemove); // Удаление всех частиц из списка частиц
+        particles.addAll(toAdd); // Добавление новых частиц в список частиц
+        repaint(); // Перерисовка панели
     }
 }

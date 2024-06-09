@@ -87,10 +87,17 @@ public class GamePanel extends JPanel implements ActionListener {
             if (particle instanceof WaterParticle) {
                 ArrayList<Particle> tempToRemove = ((WaterParticle) particle).removeParticles(particles); // Удаление огненных частиц при контакте с водой
                 for (Particle p : tempToRemove) {
-                    for (int i = 0; i < 5; i++) {
-                        toAdd.add(new AirParticle(p.getX(), p.getY(), this.size, randomSpeed(), randomSpeed())); // Добавление воздушных частиц на место удаленных
-                        toAdd.add(new LightParticle(p.getX(), p.getY(), this.size, randomSpeed(), randomSpeed())); // Добавление световых частиц на место удаленных
-                        toAdd.add(new LightParticle(p.getX(), p.getY(), this.size, randomSpeed(), randomSpeed())); // Дополнительные световые частицы
+                    try {
+                        int limitParticles = 3500;
+                        if ( particles.size() < limitParticles) {
+                            for (int i = 0; i < 5; i++) {
+                                toAdd.add(new AirParticle(p.getX(), p.getY(), this.size, randomSpeed(), randomSpeed())); // Добавление воздушных частиц на место удаленных
+                                toAdd.add(new LightParticle(p.getX(), p.getY(), this.size, randomSpeed(), randomSpeed())); // Добавление световых частиц на место удаленных
+                                toAdd.add(new LightParticle(p.getX(), p.getY(), this.size, randomSpeed(), randomSpeed())); // Дополнительные световые частицы
+                            }
+                        }
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
                     }
                 }
                 if (particle.getY() >= 600) {

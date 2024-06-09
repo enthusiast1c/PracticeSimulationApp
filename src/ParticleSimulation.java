@@ -3,6 +3,10 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Hashtable;
+import javax.sound.sampled.*;
+import java.io.IOException;
+import java.io.BufferedInputStream;
+import java.util.Objects;
 
 public class ParticleSimulation extends JFrame {
     private final JSlider speedSlider; // Слайдер для установки скорости частиц
@@ -102,7 +106,6 @@ public class ParticleSimulation extends JFrame {
         GamePanel gamePanel = new GamePanel(size, speed);
         // Получение панели с контрольными элементами
         JPanel panel = getjPanel(gamePanel, simulationFrame);
-
         // Настройка расположения и добавление компонентов на окно симуляции
         simulationFrame.setLayout(new BorderLayout());
         simulationFrame.add(gamePanel, BorderLayout.CENTER);

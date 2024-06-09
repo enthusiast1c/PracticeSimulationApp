@@ -2,9 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
+import javax.sound.sampled.*;
+
 
 // Класс для панели игры
 public class GamePanel extends JPanel implements ActionListener {
@@ -13,6 +17,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private final int initialSpeed; // Начальная скорость частиц
     private final Image texture; // Текстура фона
     private int size; // Размер частиц
+    private Clip sound; // Звук тушения
 
     // Конструктор класса
     public GamePanel(int size, int speed) {
@@ -31,6 +36,13 @@ public class GamePanel extends JPanel implements ActionListener {
 
         timer.start();
         this.texture = new ImageIcon(Objects.requireNonNull(getClass().getResource("textures/background.png"))).getImage();
+        try {
+            sound = AudioSystem.getClip();
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(Objects.requireNonNull(getClass().getResourceAsStream("sounds/extinguishing.wav"))));
+            sound.open(inputStream);
+        } catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Метод для генерации случайной скорости
@@ -87,6 +99,7 @@ public class GamePanel extends JPanel implements ActionListener {
             if (particle instanceof WaterParticle) {
                 ArrayList<Particle> tempToRemove = ((WaterParticle) particle).removeParticles(particles); // Удаление огненных частиц при контакте с водой
                 for (Particle p : tempToRemove) {
+                    beginPlaying();
                     try {
                         int limitParticles = 3500;
                         if ( particles.size() < limitParticles) {
@@ -106,9 +119,14 @@ public class GamePanel extends JPanel implements ActionListener {
                 toRemove.addAll(tempToRemove); // Удаление временных частиц
             }
         }
-
         particles.removeAll(toRemove); // Удаление всех частиц из списка частиц
         particles.addAll(toAdd); // Добавление новых частиц в список частиц
         repaint(); // Перерисовка панели
     }
+    private void beginPlaying() {
+        if (sound.isRunning()) {sound.stop();}
+        sound.setFramePosition(0);
+        sound.start();
+    }
+
 }

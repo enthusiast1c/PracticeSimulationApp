@@ -3,10 +3,6 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Hashtable;
-import javax.sound.sampled.*;
-import java.io.IOException;
-import java.io.BufferedInputStream;
-import java.util.Objects;
 
 public class ParticleSimulation extends JFrame {
     private final JSlider speedSlider; // Слайдер для установки скорости частиц

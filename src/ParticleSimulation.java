@@ -139,17 +139,28 @@ public class ParticleSimulation extends JFrame {
 
         // Создание кнопки "Restart"
         JButton restartButton = new JButton("Restart");
-        restartButton.setFont(new Font("Consolas", Font.BOLD, 20));
+        restartButton.setFont(new Font("Consolas", Font.BOLD, 16));
         restartButton.setBackground(Color.ORANGE);
         restartButton.addActionListener(e -> {
             // Закрытие текущего окна симуляции и запуск нового экземпляра стартового окна ParticleSimulation
             simulationFrame.dispose();
             new ParticleSimulation().setVisible(true);
         });
+        // Создание кнопки "Clear"
+        JButton clearButton = new JButton("Clear Screen");
+        clearButton.setFont(new Font("Consolas", Font.BOLD, 16));
+        clearButton.setBackground(Color.ORANGE);
+        clearButton.addActionListener(e -> gamePanel.clearParticles());
+
+        // Создание панели с контрольными элементами
+        JPanel buttonPanel = new JPanel(new GridLayout(1, 2));
+        buttonPanel.add(restartButton);
+        buttonPanel.add(clearButton);
+
         // Создание панели с контрольными элементами
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(controlPanel, BorderLayout.CENTER);
-        panel.add(restartButton, BorderLayout.NORTH);
+        panel.add(buttonPanel, BorderLayout.NORTH);
         return panel;
     }
 

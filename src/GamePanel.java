@@ -107,7 +107,7 @@ public class GamePanel extends JPanel implements ActionListener {
                     beginPlaying();
                     try {
                         int limitParticles = 3500;
-                        if ( particles.size() < limitParticles) {
+                        if ( particles.size() < limitParticles) { // Проверяем, не превышен ли лимит частиц на панели
                             for (int i = 0; i < 5; i++) {
                                 toAdd.add(new LightParticle(p.getX(), p.getY(), this.size, randomSpeed(), randomSpeed())); // Добавление световых частиц на место удаленных
                                 toAdd.add(new AirParticle(p.getX(), p.getY(), this.size, randomSpeed(), randomSpeed())); // Добавление воздушных частиц на место удаленны
@@ -128,10 +128,15 @@ public class GamePanel extends JPanel implements ActionListener {
         particles.addAll(toAdd); // Добавление новых частиц в список частиц
         repaint(); // Перерисовка панели
     }
+    // Метод для запуска звука тушения
     private void beginPlaying() {
         if (sound.isRunning()) {sound.stop();}
         sound.setFramePosition(0);
         sound.start();
     }
-
+    // Метод для удаления частиц с панели
+    public void clearParticles() {
+        particles.clear();
+        repaint();
+    }
 }

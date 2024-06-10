@@ -12,11 +12,6 @@ public class WaterParticle extends Particle {
         this.texture = new ImageIcon(Objects.requireNonNull(getClass().getResource("textures/water(texture).png"))).getImage();
     }
 
-    // Переопределенный метод для перемещения частицы
-    @Override
-    public void move(ArrayList<Particle> particles) {
-        super.move(particles); // Вызов метода перемещения родительского класса
-    }
 
     // Переопределенный метод для отрисовки частицы
     @Override

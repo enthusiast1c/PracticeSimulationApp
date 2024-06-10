@@ -40,11 +40,6 @@ public class PowderParticle extends Particle {
         return attachedAirParticles.size() == 10 && attachedLightParticles.size() == 20; // Проверка условий трансформации
     }
 
-    // Переопределенный метод для перемещения частицы
-    @Override
-    public void move(ArrayList<Particle> particles) {
-        super.move(particles); // Вызов метода перемещения родительского класса
-    }
     // Переопределенный метод для отрисовки частицы
     @Override
     public void draw(Graphics g) {

@@ -44,7 +44,7 @@ public class PowderParticle extends Particle {
     @Override
     public void draw(Graphics g) {
         // Отрисовка изображения текстуры частицы на графическом контексте
-        g.drawImage(texture, (int)x, (int)y, size, size, null);
+        g.drawImage(texture, x, y, size, size, null);
     }
     // Метод для получения списка привязанных воздушных частиц
     public ArrayList<AirParticle> getAttachedAirParticles() {return attachedAirParticles;}

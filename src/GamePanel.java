@@ -47,8 +47,13 @@ public class GamePanel extends JPanel implements ActionListener {
 
     // Метод для генерации случайной скорости
     private int randomSpeed() {
-        return random.nextInt(this.initialSpeed * 2 + 1) - this.initialSpeed;
+        int randomValue;
+        do {
+            randomValue = random.nextInt(this.initialSpeed * 2 + 1) - this.initialSpeed;
+        } while (randomValue == 0);
+        return randomValue;
     }
+
 
     // Метод для добавления частицы в список
     public void addParticle(Particle particle) {
@@ -92,7 +97,7 @@ public class GamePanel extends JPanel implements ActionListener {
                     toRemove.add(particle); // Удаление частицы пороха
                     toRemove.addAll(powderParticle.getAttachedAirParticles()); // Удаление привязанных воздушных частиц
                     toRemove.addAll(powderParticle.getAttachedLightParticles()); // Удаление привязанных световых частиц
-                    toAdd.add(new FireParticle(powderParticle.getX(), powderParticle.getY(), 110, randomSpeed() + 6, randomSpeed() + 6)); // Добавление огненной частицы
+                    toAdd.add(new FireParticle(powderParticle.getX(), powderParticle.getY(), 110, randomSpeed(), randomSpeed())); // Добавление огненной частицы
                 }
             }
 
@@ -104,8 +109,8 @@ public class GamePanel extends JPanel implements ActionListener {
                         int limitParticles = 3500;
                         if ( particles.size() < limitParticles) {
                             for (int i = 0; i < 5; i++) {
-                                toAdd.add(new AirParticle(p.getX(), p.getY(), this.size, randomSpeed(), randomSpeed())); // Добавление воздушных частиц на место удаленных
                                 toAdd.add(new LightParticle(p.getX(), p.getY(), this.size, randomSpeed(), randomSpeed())); // Добавление световых частиц на место удаленных
+                                toAdd.add(new AirParticle(p.getX(), p.getY(), this.size, randomSpeed(), randomSpeed())); // Добавление воздушных частиц на место удаленны
                                 toAdd.add(new LightParticle(p.getX(), p.getY(), this.size, randomSpeed(), randomSpeed())); // Дополнительные световые частицы
                             }
                         }

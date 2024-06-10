@@ -265,8 +265,13 @@ public class ControlPanel extends JPanel {
     // Метод для генерации случайной скорости
     private int randomSpeed() {
         int speed = speedSlider.getValue();
-        return random.nextInt(speed * 2 + 1) - speed;
+        int randomValue;
+        do {
+            randomValue = random.nextInt(speed * 2 + 1) - speed;
+        } while (randomValue == 0);
+        return randomValue;
     }
+
     // Метод для запуска авто симуляции
     public void startAutoSim(int duration) {
         this.autoSimDuration = duration;

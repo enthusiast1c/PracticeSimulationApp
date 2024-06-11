@@ -106,9 +106,10 @@ public class ParticleSimulation extends JFrame {
         simulationFrame.setLayout(new BorderLayout());
         simulationFrame.add(gamePanel, BorderLayout.CENTER);
         simulationFrame.add(panel, BorderLayout.NORTH);
-        simulationFrame.setSize(1920, 1080);
+        simulationFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         simulationFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         simulationFrame.setVisible(true);
+        simulationFrame.setResizable(false);
         // Закрытие стартового окна
         dispose();
         // Обработчик закрытия окна симуляции

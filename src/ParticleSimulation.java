@@ -13,6 +13,7 @@ public class ParticleSimulation extends JFrame {
         // Установка параметров стартового меню
         setTitle("Particle Simulation Menu");
         setSize(350, 300);
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("textures/icon.png")));
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setResizable(false);
         setLayout(new GridLayout(5, 1));
@@ -98,6 +99,7 @@ public class ParticleSimulation extends JFrame {
     private void startSimulation(int speed, int size) {
         // Создание окна для симуляции
         JFrame simulationFrame = new JFrame("Particle Simulation");
+        simulationFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("textures/icon.png")));
         // Создание игровой панели с указанными параметрами скорости и размера частиц
         GamePanel gamePanel = new GamePanel(size, speed);
         // Получение панели с контрольными элементами

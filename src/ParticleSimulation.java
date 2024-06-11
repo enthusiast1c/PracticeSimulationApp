@@ -146,21 +146,11 @@ public class ParticleSimulation extends JFrame {
             simulationFrame.dispose();
             new ParticleSimulation().setVisible(true);
         });
-        // Создание кнопки "Clear"
-        JButton clearButton = new JButton("Clear Screen");
-        clearButton.setFont(new Font("Consolas", Font.BOLD, 16));
-        clearButton.setBackground(Color.ORANGE);
-        clearButton.addActionListener(e -> gamePanel.clearParticles());
-
-        // Создание панели с контрольными элементами
-        JPanel buttonPanel = new JPanel(new GridLayout(1, 2));
-        buttonPanel.add(restartButton);
-        buttonPanel.add(clearButton);
 
         // Создание панели с контрольными элементами
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(controlPanel, BorderLayout.CENTER);
-        panel.add(buttonPanel, BorderLayout.NORTH);
+        panel.add(restartButton, BorderLayout.NORTH);
         return panel;
     }
 

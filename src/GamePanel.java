@@ -134,9 +134,4 @@ public class GamePanel extends JPanel implements ActionListener {
         sound.setFramePosition(0);
         sound.start();
     }
-    // Метод для удаления частиц с панели
-    public void clearParticles() {
-        particles.clear();
-        repaint();
-    }
 }

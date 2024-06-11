@@ -58,34 +58,36 @@ public class ControlPanel extends JPanel {
         JButton addPowderParticleButton = new JButton("Create Powder Particles"); // Создание кнопки добавления частиц пороха
         // Кнопка для добавления световых частиц
         JButton addLightParticleButton = new JButton("Create Light Particles"); // Создание кнопки добавления световых частиц
+        // Создание кнопки очистки игрового поля
+        JButton clearButton = new JButton("Clear Screen");
         // Установление цвета кнопок
         addAirParticleButton.setBackground(Color.ORANGE);
         addPowderParticleButton.setBackground(Color.ORANGE);
         addLightParticleButton.setBackground(Color.ORANGE);
+        clearButton.setBackground(Color.ORANGE);
         // Добавление метки, поля ввода и кнопок в нижнюю подпанель
         bottomPanel.add(amountLabel);
         bottomPanel.add(amountParticleField);
         bottomPanel.add(addAirParticleButton);
         bottomPanel.add(addPowderParticleButton);
         bottomPanel.add(addLightParticleButton);
+        bottomPanel.add(clearButton);
         bottomPanel.setBackground(Color.DARK_GRAY);
 
         // Создание панели для авто симуляции
-        JPanel autoPanel = new JPanel(new GridLayout(1, 3));
+        JPanel autoPanel = new JPanel(new GridLayout(1, 5));
         startAutoSimButton = new JButton("Start Auto Simulation"); // Кнопка для запуска авто симуляции
-        startAutoSimButton.setForeground(Color.DARK_GRAY);
-        startAutoSimButton.setBackground(Color.ORANGE);
         pauseAutoSimButton = new JButton("Pause Auto Simulation"); // Кнопка для паузы авто симуляции
-        pauseAutoSimButton.setForeground(Color.DARK_GRAY);
-        pauseAutoSimButton.setBackground(Color.ORANGE);
         resumeAutoSimButton = new JButton("Resume Auto Simulation"); // Кнопка для возобновления авто симуляции
-        resumeAutoSimButton.setForeground(Color.DARK_GRAY);
-        resumeAutoSimButton.setBackground(Color.ORANGE);
         JTextField autoSimDurationField = new JTextField("10"); // Поле ввода продолжительности авто симуляции
         autoSimDurationField.setBackground(Color.LIGHT_GRAY);
         JLabel autoSimLabel = new JLabel("Auto Sim Duration (s):", SwingConstants.CENTER); // Метка для ввода продолжительности авто симуляции
         autoSimLabel.setForeground(Color.ORANGE);
         JButton addWaterParticleButton = new JButton("Put out the fire"); // Кнопка для добавления водяных частиц
+        // Установление цвета кнопок
+        startAutoSimButton.setBackground(Color.ORANGE);
+        pauseAutoSimButton.setBackground(Color.ORANGE);
+        resumeAutoSimButton.setBackground(Color.ORANGE);
         addWaterParticleButton.setBackground(Color.ORANGE);
         // Добавление метки, поля ввода и кнопок в панель авто симуляции
         autoPanel.add(autoSimLabel);
@@ -159,6 +161,11 @@ public class ControlPanel extends JPanel {
                 gamePanel.addParticle(particle);
             }
         });
+        clearButton.addActionListener(e -> {
+            gamePanel.particles.clear();
+            repaint();
+        });
+
         // Добавление слушателя событий для кнопки запуска авто симуляции
         startAutoSimButton.addActionListener(e -> {
             try {
@@ -202,6 +209,7 @@ public class ControlPanel extends JPanel {
         addAirParticleButton.setFont(buttonFont);
         addPowderParticleButton.setFont(buttonFont);
         addLightParticleButton.setFont(buttonFont);
+        clearButton.setFont(buttonFont);
         autoSimDurationField.setFont(buttonFont);
         autoSimLabel.setFont(buttonFont);
         startAutoSimButton.setFont(buttonFont);
@@ -214,6 +222,7 @@ public class ControlPanel extends JPanel {
         addAirParticleButton.setBorder(border);
         addPowderParticleButton.setBorder(border);
         addLightParticleButton.setBorder(border);
+        clearButton.setBorder(border);
         startAutoSimButton.setBorder(border);
         pauseAutoSimButton.setBorder(border);
         resumeAutoSimButton.setBorder(border);

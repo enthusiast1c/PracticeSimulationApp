@@ -88,7 +88,6 @@ public class ParticleSimulation extends JFrame {
                 );
 
                 if (confirmed == JOptionPane.YES_OPTION) {
-                    dispose();
                     System.exit(0);
                 }
             }
@@ -128,7 +127,6 @@ public class ParticleSimulation extends JFrame {
 
                 // Закрытие приложения при подтверждении выхода
                 if (confirmed == JOptionPane.YES_OPTION) {
-                    simulationFrame.dispose();
                     System.exit(0);
                 }
             }
@@ -139,7 +137,6 @@ public class ParticleSimulation extends JFrame {
     private static JPanel getjPanel(GamePanel gamePanel, JFrame simulationFrame) {
         // Создание панели управления с переданной игровой панелью
         ControlPanel controlPanel = new ControlPanel(gamePanel);
-
         // Создание кнопки "Restart"
         JButton restartButton = new JButton("Restart");
         restartButton.setFont(new Font("Consolas", Font.BOLD, 16));
